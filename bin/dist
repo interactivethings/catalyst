@@ -17,7 +17,7 @@ if (versionExists(VERSION)) {
 fs.mkdir(rpath('dist', VERSION));
 
 FILES.forEach(function(filepath) {
-  copyFileSync(rpath(filepath), rpath('dist', filepath));
+  copyAndExpandFileSync(rpath(filepath), rpath('dist', filepath));
 
   if (filepath.match(/.css/)) {
     var css = fs.readFileSync(rpath(filepath));
@@ -35,8 +35,10 @@ function versionExists(version) {
   return fs.existsSync(rpath('dist', VERSION));
 }
 
-function copyFileSync(srcPath, destPath) {
-  fs.writeFileSync(destPath, fs.readFileSync(srcPath));
+function copyAndExpandFileSync(srcPath, destPath) {
+  var src = fs.readFileSync(srcPath);
+  src = src.toString().replace(/%VERSION%/, VERSION);
+  fs.writeFileSync(destPath, src);
 }
 
 function minifyCSS(css) {
