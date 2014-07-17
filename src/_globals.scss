@@ -1,0 +1,84 @@
+/*
+  ===============================================
+  # GLOBAL VARIABLES
+  ===============================================
+*/
+
+// Import Core Utils
+@import "utils/functions";
+@import "utils/mixins";
+
+/*
+  -----------------------------------------------
+  ## Media Queries
+  -----------------------------------------------
+*/
+
+/*
+  ### Breakpoints Variables
+*/
+
+$ranges: (
+  's'   (0em, 40em),
+  'm'   (40.063em, 64em),
+  'l'   (64.063em, 90em)
+)!default;
+
+$breakpoints: (
+  ''    'only screen',
+  's'   'only screen',
+  'm'   'only screen and (min-width:#{range-start("m")})',
+  'l'   'only screen and (min-width:#{range-start("l")})'
+)!default;
+
+$orientations: (
+  'v'   'only screen and (orientation: portrait)',
+  'h'   'only screen and (orientation: landscape)'
+)!default;
+
+/*
+  -----------------------------------------------
+  ## Grid Units
+  -----------------------------------------------
+*/
+
+$units: (
+  1 1,
+  1 2,
+  1 3, 2 3,
+  1 4, 2 4, 3 4,
+  1 5, 2 5, 3 5, 4 5,
+  1 6, 2 6, 3 6, 4 6, 5 6
+)!default;
+
+/*
+  -----------------------------------------------
+  ## Spaces
+  -----------------------------------------------
+*/
+
+/*
+  ### Default Spaces' Sizes
+
+  If you need more or different kinds of spaces, override the $spaces
+  list. This is a list of lists, simulating key-value pairs in Sass.
+*/
+
+$space-x:  5px!default;
+$space-s: 10px!default;
+$space-m: 20px!default;
+$space-l: 40px!default;
+$space-h: 80px!default;
+
+/*
+  ### Spaces' variables
+*/
+
+$spaces: (
+  'n'   0,
+  'x'   $space-x,
+  's'   $space-s,
+  'm'   $space-m,
+  'l'   $space-l,
+  'h'   $space-h
+)!default;

@@ -1,0 +1,103 @@
+/*
+  ===============================================
+  # SPACING HELPERS
+  ===============================================
+  Spaces can be used to modify the spacing between objects. The class
+  names have the format (type)(sides)(space), resulting in classes like
+  .pvs (padding, vertical, small), .mhl (margin, horizontal, large), etc.
+  p, m = padding, margin
+  a, t, r, b, l, h, v = all, top, right, bottom, left, horizontal, vertical
+  x, s, m, l, h = spaces
+  n - No space
+  x - Extra small space
+  s - Small space
+  m - Medium space
+  l - Large space
+  h - Huge space
+  ===============================================
+*/
+
+// Import core Globals
+@import "globals";
+
+// Wrap viewport size in a prefix
+@function space-name($name, $viewport) {
+  @return prefix($viewport, $name, '-');
+}
+
+/*
+  -----------------------------------------------
+  ## Space Name
+  -----------------------------------------------
+*/
+
+/*
+  ### The saucy Spacing logic
+*/
+
+@mixin spacing($viewport) {
+  @each $space-variable in $spaces {
+
+    $name     : key($space-variable);
+    $value    : value($space-variable);
+    $sides    : t top, r right, b bottom, l left;
+    $context  : if($viewport == '', '', '#{$viewport}-');
+
+    .#{$context}pt#{$name},
+    .#{$context}pv#{$name},
+    .#{$context}pa#{$name} {
+      padding-top: $value !important;
+    }
+    .#{$context}pr#{$name},
+    .#{$context}ph#{$name},
+    .#{$context}pa#{$name} {
+      padding-right: $value !important;
+    }
+    .#{$context}pb#{$name},
+    .#{$context}pv#{$name},
+    .#{$context}pa#{$name} {
+      padding-bottom: $value !important;
+    }
+    .#{$context}pl#{$name},
+    .#{$context}ph#{$name},
+    .#{$context}pa#{$name} {
+      padding-left: $value !important;
+    }
+    .#{$context}mt#{$name},
+    .#{$context}mv#{$name},
+    .#{$context}ma#{$name} {
+      margin-top: $value !important;
+    }
+    .#{$context}mr#{$name},
+    .#{$context}mh#{$name},
+    .#{$context}ma#{$name} {
+      margin-right: $value !important;
+    }
+    .#{$context}mb#{$name},
+    .#{$context}mv#{$name},
+    .#{$context}ma#{$name} {
+      margin-bottom: $value !important;
+    }
+    .#{$context}ml#{$name},
+    .#{$context}mh#{$name},
+    .#{$context}ma#{$name} {
+      margin-left: $value !important;
+    }
+
+  }
+}
+
+/*
+  ### CSS Output
+*/
+
+@each $breakpoint in $breakpoints {
+
+  $viewport     : key($breakpoint);
+  $declaration  : value($breakpoint);
+
+  @media #{$declaration} {
+    @include spacing($viewport);
+  }
+
+}

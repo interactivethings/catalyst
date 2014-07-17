@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catalyst Test – Grid</title>
+
+  <link rel="stylesheet" href="../catalyst.css">
+  <style type="text/css">
+  hr {
+    border: none;
+    background: #ccc;
+    height: 1px;
+    margin: 20px 0;
+  }
+  .group {
+    background: #f1f1f1;
+    color: #333;
+    font-family: helvetica;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  [class*="span-"] {
+    min-height: 60px;
+  }
+  [class*="span-"]:hover:before {
+    background: #333;
+    color: #ccc;
+    content: attr(class);
+    position: absolute;
+  }
+  [class*="span-"]:nth-child(2n-1) {
+    background: #e1e1e1;
+  }
+  </style>
+</head>
+<body>
+  <div class="group">
+    <div class="s-span-1of6 l-span-1of3"></div>
+    <div class="s-span-2of6 l-span-1of3"></div>
+    <div class="s-span-3of6 l-span-1of3"></div>
+  </div>
+
+  <hr>
+
+  <div class="group">
+    <div class="s-span-1of6 l-span-1of3"></div>
+    <div class="s-span-2of6 l-span-1of3"></div>
+    <div class="s-span-3of6 l-span-1of3"></div>
+  </div>
+</body>
+</html>

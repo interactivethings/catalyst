@@ -1,0 +1,77 @@
+/*
+  -----------------------------------------------
+  ## Low-level functions
+  -----------------------------------------------
+*/
+
+@function key($list) {        // Grab variable definition's 1st column (variable name)
+  @return nth($list, 1);
+}
+
+@function value($list) {      // Grab variable definition's 2nd column (variable value)
+  @return nth($list, 2);
+}
+
+@function map-get($list, $key) {
+  @each $tuple in $list {
+    @if key($tuple) == $key { @return value($tuple); }
+  }
+  @warn "Key #{$key} not found in list #{$list}";
+  @return null;
+}
+
+@function list-to-string($list, $glue: '', $is-nested: false) {
+  $result: null;
+  @for $i from 1 through length($list) {
+    $e: nth($list, $i);
+    @if type-of($e) == list {
+      $result: $result#{list-to-string($e, $glue, true)};
+    }
+    @else {
+      $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+    }
+  }
+  @return $result;
+}
+
+@function prefix($str, $prefix: '', $separator: '') {
+  @if $prefix == '' {
+    @return $str;
+  } @else {
+    @return "#{$prefix}#{$separator}#{$str}";
+  }
+}
+
+@function suffix($str, $suffix: '', $separator: '') {
+  @if $suffix == '' {
+    @return $str;
+  } @else {
+    @return "#{$str}#{$separator}#{$suffix}";
+  }
+}
+
+
+/*
+  -----------------------------------------------
+  ## User-level functions
+  -----------------------------------------------
+*/
+@function range($key) {
+  @return map-get($ranges, $key);
+}
+
+@function range-start($key) {
+  @return key(range($key));
+}
+
+@function range-end($key) {
+  @return value(range($key));
+}
+
+@function breakpoint($key) {
+  @return map-get($breakpoints, $key);
+}
+
+@function orientation($key) {
+  @return map-get($orientations, $key);
+}

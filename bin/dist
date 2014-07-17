@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+
+var fs   = require('fs');
+var path = require('path');
+var clc  = require('cli-color');
+var CleanCSS = require('clean-css');
+
+var ROOT    = path.join(__dirname, '..');
+var VERSION = require("../package.json").version;
+var FILES   = process.argv.slice(2);
+
+if (versionExists(VERSION)) {
+  console.log(clc.red.bold("Error: a distribution for version " + VERSION + " already exists"));
+  process.exit(1);
+}
+
+fs.mkdir(rpath('dist', VERSION));
+
+FILES.forEach(function(filepath) {
+  copyFileSync(rpath(filepath), rpath('dist', filepath));
+
+  if (filepath.match(/.css/)) {
+    var css = fs.readFileSync(rpath(filepath));
+    fs.writeFileSync(rpath('dist', VERSION, filepath), minifyCSS(css));
+  }
+});
+
+console.log(clc.green("Created Catalyst version " + VERSION));
+
+
+/* Utils
+----------------------------------------------- */
+
+function versionExists(version) {
+  return fs.existsSync(rpath('dist', VERSION));
+}
+
+function copyFileSync(srcPath, destPath) {
+  fs.writeFileSync(destPath, fs.readFileSync(srcPath));
+}
+
+function minifyCSS(css) {
+  var cc = new CleanCSS();
+  return cssBanner() + cc.minify(css);
+}
+
+function cssBanner() {
+  return "/* Catalyst " + VERSION + " */\n";
+}
+
+function rpath() {
+  var args = Array.prototype.slice.call(arguments);
+  return path.join.apply(path, [ROOT].concat(args))
+}

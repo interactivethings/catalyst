@@ -1,0 +1,137 @@
+/*
+  ===============================================
+  # VISIBILITY HELPERS
+  ===============================================
+*/
+
+// Import core Utils
+@import "globals";
+
+// Wrap orientation in a prefix
+@function orientation-name($name, $orientation) {
+  @return prefix($orientation, $name, '-');
+}
+
+%show-base {
+  display: none !important;
+}
+
+/*
+  -----------------------------------------------
+  ## Viewport width visibility helpers
+  -----------------------------------------------
+*/
+
+/*
+  ### Responsive Hide Helper
+*/
+
+@mixin hide($viewport) {
+  $context  : if($viewport == '', '', '#{$viewport}-');
+  .#{$context}hide {
+    display: none !important;
+  }
+}
+
+@each $breakpoint in $breakpoints {
+  $viewport     : key($breakpoint);
+  $declaration  : value($breakpoint);
+  @media #{$declaration} {
+    @include hide($viewport);
+  }
+}
+
+/*
+  ### Responsive Show Helper
+*/
+
+@each $breakpoint in $breakpoints {
+  $viewport     : key($breakpoint);
+  $declaration  : value($breakpoint);
+  $context  : if($viewport == '', '', '#{$viewport}-');
+  .#{$context}show {
+    @extend %show-base;
+  }
+
+  @media #{$declaration} {
+    .#{$context}show {
+      display: inline-block !important;
+    }
+    table.#{$context}show {
+      display: table !important;
+    }
+    thead.#{$context}show {
+      display: table-header-group !important;
+    }
+    tbody.#{$context}show {
+      display: table-row-group !important;
+    }
+    tr.#{$context}show {
+      display: table-row !important;
+    }
+    td.#{$context}show,
+    th.#{$context}show {
+      display: table-cell !important;
+    }
+  }
+}
+
+/*
+  -----------------------------------------------
+  ## Viewport orientation visibility helpers
+  -----------------------------------------------
+*/
+
+/*
+  ### Orientation Responsive Hide Helper
+*/
+
+@mixin hide($viewport) {
+  $context  : if($viewport == '', '', '#{$viewport}-');
+  .#{$context}hide {
+    display: none !important;
+  }
+}
+
+@each $orientation in $orientations {
+  $viewport     : key($orientation);
+  $declaration  : value($orientation);
+  @media #{$declaration} {
+    @include hide($viewport);
+  }
+}
+
+/*
+  ### Orientation Responsive Show Helper
+*/
+
+@each $orientation in $orientations {
+  $viewport     : key($orientation);
+  $declaration  : value($orientation);
+  $context  : if($viewport == '', '', '#{$viewport}-');
+  .#{$context}show {
+    @extend %show-base;
+  }
+
+  @media #{$declaration} {
+    .#{$context}show {
+      display: inherit !important;
+    }
+    table.#{$context}show {
+      display: table !important;
+    }
+    thead.#{$context}show {
+      display: table-header-group !important;
+    }
+    tbody.#{$context}show {
+      display: table-row-group !important;
+    }
+    tr.#{$context}show {
+      display: table-row !important;
+    }
+    td.#{$context}show,
+    th.#{$context}show {
+      display: table-cell !important;
+    }
+  }
+}
