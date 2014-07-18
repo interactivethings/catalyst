@@ -13,6 +13,11 @@
     font-weight: bold;
     margin: 40px 0 20px 0;
   }
+  .bg {
+    background: #d7e7ee;
+    min-height: 60px;
+    width: 100%;
+  }
   .group {
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAJElEQVQImT2JsQ0AMAyDyP+/2ieQIWqZEJDEx6gA0JZr9/mmLgUWKQ+z/AZWAAAAAElFTkSuQmCC");
     color: #333;
@@ -20,6 +25,7 @@
     font-size: 11px;
     line-height: 1.4;
   }
+  [class*="gutter-"] + [class*="gutter-"],
   .group + .group {
     margin-top: 1px;
   }
@@ -43,64 +49,68 @@
   <h2>Basics</h2>
 
   <div class="group">
-    <div class="s-span-1of6 l-span-1of3"></div>
-    <div class="s-span-2of6 l-span-1of3"></div>
-    <div class="s-span-3of6 l-span-1of3"></div>
-  </div>
-
-  <div class="group">
-    <div class="l-span-1of4"></div>
-    <div class="l-span-2of4"></div>
-    <div class="l-span-1of4"></div>
-  </div>
-
-  <div class="group">
-    <div class="s-span-2of6 l-span-1of3"></div>
-    <div class="s-span-3of6 l-span-1of3"></div>
-    <div class="s-span-1of6 l-span-1of3"></div>
-  </div>
-
-  <div class="group">
     <div class="span-1of4"></div>
-    <div class="span-3of4"></div>
+    <div class="span-2of4"></div>
+    <div class="span-1of4"></div>
   </div>
 
   <div class="group">
-    <div class="l-span-1of6"></div>
-    <div class="l-span-5of6"></div>
+    <div class="s-span-1of6 m-span-3of6"></div>
+    <div class="s-span-2of6 m-span-2of6"></div>
+    <div class="s-span-3of6 m-span-1of6"></div>
   </div>
 
-  <div class="group">
-    <div class="s-span-3of6 m-span-4of5"></div>
-    <div class="s-span-3of6 m-span-1of5"></div>
+
+  <h2>Gutter</h2>
+
+  <div class="gutter-s">
+    <div class="group">
+      <div class="span-1of3"><div class="bg"></div></div>
+      <div class="span-1of3"><div class="bg"></div></div>
+      <div class="span-1of3"><div class="bg"></div></div>
+    </div>
   </div>
 
-  <div class="group">
-    <div class="span-1of6"></div>
-    <div class="span-5of6"></div>
+  <div class="s-gutter-s m-gutter-l">
+    <div class="group">
+      <div class="span-1of6"><div class="bg"></div></div>
+      <div class="span-2of6"><div class="bg"></div></div>
+      <div class="span-1of6"><div class="bg"></div></div>
+      <div class="span-2of6"><div class="bg"></div></div>
+    </div>
   </div>
 
-  <div class="group">
-    <div class="m-span-1of6"></div>
-    <div class="m-span-5of6"></div>
+  <div class="gutter-s">
+    <div class="group">
+      <div class="span-1of6"><div class="bg"></div></div>
+      <div class="span-2of6">
+        <div class="group">
+          <div class="span-1of2">Child&nbsp;1</div>
+          <div class="span-1of2">Child&nbsp;2</div>
+        </div>
+      </div>
+      <div class="span-1of6"><div class="bg"></div></div>
+      <div class="span-2of6"><div class="bg"></div></div>
+    </div>
   </div>
+
 
 
   <h2>Nesting</h2>
 
   <div class="group">
-    <div class="span-2of3"> AAA
+    <div class="span-1of3">A</div>
+    <div class="span-2of3">B
       <div class="group">
-        <div class="span-2of3"> CCC
+        <div class="span-1of2">C
           <div class="group">
-            <div class="span-2of3">EEE</div>
-            <div class="span-1of3">FFF</div>
+            <div class="span-1of2">E</div>
+            <div class="span-1of2">F</div>
           </div>
         </div>
-        <div class="span-1of3">DDD</div>
+        <div class="span-1of2">D</div>
       </div>
     </div>
-    <div class="span-1of3">BBB</div>
   </div>
 
 

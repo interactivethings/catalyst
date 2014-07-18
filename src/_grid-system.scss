@@ -2,8 +2,11 @@
  * Catalyst Grid System
  *
  * grid-install         - make the grid classes available to css
+ *
  * group                - a group of spans
+ * gutter (size)        - wraps around a group, spans will have gutters
  * span   (part, whole) - a column with a percentage based width
+ *
  * pull   (part, whole) - reposition a span to the left
  * push   (part, whole) - reposition a span to the right
  * offset (part, whole) - prepend an invisible span
@@ -24,6 +27,20 @@
   @include clearfix;
   clear: both;
   width: 100%;
+}
+
+@mixin gutter($size: '') {
+  $space: map-get($spaces, $size);
+  overflow: hidden;
+  & > .group {
+    margin-left: -$space;
+    width: 100%; // Fallback
+    width: calc(100% + 2 * #{$space});
+    & > [class*="span-"] {
+      padding-left: $space;
+      padding-right: $space;
+    }
+  }
 }
 
 @mixin span($part, $whole) {
@@ -71,6 +88,15 @@
     $declaration: value($breakpoint);
 
     @media #{$declaration} {
+
+      @each $space in $spaces {
+        $space-name: key($space);
+        $selector: "gutter-#{$space-name}";
+        &.#{_grid-size-name($selector, $size)} {
+          @include gutter($space-name);
+        }
+      }
+
       $classed-units: ();
       @each $unit in $units {
         $part:  key($unit);
