@@ -8,20 +8,23 @@
 
   <link rel="stylesheet" href="../catalyst.css">
   <style type="text/css">
-  hr {
-    border: none;
-    background: #ccc;
-    height: 1px;
-    margin: 20px 0;
+  h2 {
+    font-family: helvetica;
+    font-weight: bold;
+    margin: 40px 0 20px 0;
   }
   .group {
-    background: #f1f1f1;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAJElEQVQImT2JsQ0AMAyDyP+/2ieQIWqZEJDEx6gA0JZr9/mmLgUWKQ+z/AZWAAAAAElFTkSuQmCC");
     color: #333;
     font-family: helvetica;
     font-size: 11px;
     line-height: 1.4;
   }
+  .group + .group {
+    margin-top: 1px;
+  }
   [class*="span-"] {
+    background: #eee;
     min-height: 60px;
   }
   [class*="span-"]:hover:before {
@@ -31,23 +34,125 @@
     position: absolute;
   }
   [class*="span-"]:nth-child(2n-1) {
-    background: #e1e1e1;
+    background: #ddd;
   }
   </style>
 </head>
 <body>
-  <div class="group">
-    <div class="s-span-1of6 l-span-1of3"></div>
-    <div class="s-span-2of6 l-span-1of3"></div>
-    <div class="s-span-3of6 l-span-1of3"></div>
-  </div>
 
-  <hr>
+  <h2>Basics</h2>
 
   <div class="group">
     <div class="s-span-1of6 l-span-1of3"></div>
     <div class="s-span-2of6 l-span-1of3"></div>
     <div class="s-span-3of6 l-span-1of3"></div>
   </div>
+
+  <div class="group">
+    <div class="l-span-1of4"></div>
+    <div class="l-span-2of4"></div>
+    <div class="l-span-1of4"></div>
+  </div>
+
+  <div class="group">
+    <div class="s-span-2of6 l-span-1of3"></div>
+    <div class="s-span-3of6 l-span-1of3"></div>
+    <div class="s-span-1of6 l-span-1of3"></div>
+  </div>
+
+  <div class="group">
+    <div class="span-1of4"></div>
+    <div class="span-3of4"></div>
+  </div>
+
+  <div class="group">
+    <div class="l-span-1of6"></div>
+    <div class="l-span-5of6"></div>
+  </div>
+
+  <div class="group">
+    <div class="s-span-3of6 m-span-4of5"></div>
+    <div class="s-span-3of6 m-span-1of5"></div>
+  </div>
+
+  <div class="group">
+    <div class="span-1of6"></div>
+    <div class="span-5of6"></div>
+  </div>
+
+  <div class="group">
+    <div class="m-span-1of6"></div>
+    <div class="m-span-5of6"></div>
+  </div>
+
+
+  <h2>Nesting</h2>
+
+  <div class="group">
+    <div class="span-2of3"> AAA
+      <div class="group">
+        <div class="span-2of3"> CCC
+          <div class="group">
+            <div class="span-2of3">EEE</div>
+            <div class="span-1of3">FFF</div>
+          </div>
+        </div>
+        <div class="span-1of3">DDD</div>
+      </div>
+    </div>
+    <div class="span-1of3">BBB</div>
+  </div>
+
+
+  <h2>Offsets</h2>
+
+  <div class="group">
+    <div class="span-1of6 offset-2of6"></div>
+    <div class="span-1of6 offset-2of6"></div>
+  </div>
+
+  <div class="group">
+    <div class="s-span-1of3"></div>
+    <div class="s-span-1of3 s-offset-1of3 m-offset-none l-offset-1of3"></div>
+  </div>
+
+
+  <h2>Alignment</h2>
+
+  <div class="group">
+    <div class="span-1of4 center"></div>
+  </div>
+
+  <div class="group">
+    <div class="span-1of2 l-center"></div>
+  </div>
+
+  <div class="group">
+    <div class="span-3of4 center l-flow-left"></div>
+  </div>
+
+
+  <h2>Push &amp; pull</h2>
+
+  <div class="group">
+    <div class="span-5of6 push-1of6">1</div>
+    <div class="span-1of6 pull-5of6">2</div>
+  </div>
+
+  <div class="group">
+    <div class="l-span-3of4 l-push-1of4">1</div>
+    <div class="l-span-1of4 l-pull-3of4">2</div>
+  </div>
+
+  <div class="group">
+    <div class="s-span-2of5 m-span-3of5 s-push-3of5 m-push-2of5">1</div>
+    <div class="s-span-3of5 m-span-2of5 s-pull-2of5 m-pull-3of5">2</div>
+  </div>
+
+  <div class="group">
+    <div class="m-span-1of2 m-push-1of2">1</div>
+    <div class="m-span-1of2 m-pull-1of2">2</div>
+  </div>
+
 </body>
 </html>

@@ -1,159 +1,142 @@
-/*
-  ===============================================
-  # GRID SYSTEM
-  ===============================================
-*/
+/**
+ * Catalyst Grid System
+ *
+ * grid-install         - make the grid classes available to css
+ * group                - a group of spans
+ * span   (part, whole) - a column with a percentage based width
+ * pull   (part, whole) - reposition a span to the left
+ * push   (part, whole) - reposition a span to the right
+ * offset (part, whole) - prepend an invisible span
+ * offset-none          - reset an existing offset
+ * flow   (left|right)  - align a span left or right
+ * center               - center a span within a group
+ *
+ */
 
-// Import core Globals
 @import "globals";
 
-/*
-  -----------------------------------------------
-  ## Grid Name Functions
-  -----------------------------------------------
-*/
 
-@function unit-group-name() {
-  @return "group";
-}
+//
+// Public API
+//
 
-@function part-name($part, $whole) {
-  @return "#{$part}of#{$whole}";
-}
-
-@function unit-name($part, $whole, $size: '') {
-  @return prefix(prefix(part-name($part, $whole), 'span', '-'), $size, '-');
-}
-
-@function pull-name($part, $whole, $size: '') {
-  @return prefix(prefix(part-name($part, $whole), 'pull', '-'), $size, '-');
-}
-
-@function push-name($part, $whole, $size: '') {
-  @return prefix(prefix(part-name($part, $whole), 'push', '-'), $size, '-');
-}
-
-@function offset-name($part, $whole, $size: '') {
-  @return prefix(prefix(part-name($part, $whole), 'offset', '-'), $size, '-');
-}
-
-@function center-name($part, $whole, $size: '') {
-  @return prefix('center', $size, '-');
-}
-
-@function flow-left-name($part, $whole, $size: '') {
-  @return prefix('flow-left', $size, '-');
-}
-
-@function flow-right-name($part, $whole, $size: '') {
-  @return prefix('flow-right', $size, '-');
-}
-
-/*
-  -----------------------------------------------
-  ## Grid Calculations
-  -----------------------------------------------
-*/
-
-@mixin grid-unit-base($units, $size) {
-  $classed-units: ();
-  @each $unit in $units {
-    $part:  key($unit);
-    $whole: value($unit);
-    $classed-units: append($classed-units, '.#{unit-name($part, $whole, $size)}');
-  }
-
-  #{list-to-string($classed-units, ', ')} {
-    display: block;
-    float: left;
-    min-height: 1px;
-    position: relative;
-  }
-}
-
-@mixin grid-unit($part, $whole) {
-  width: percentage(($part / $whole));
-}
-
-@mixin grid-pull($part, $whole) {
-  left: auto;
-  right: percentage(($part / $whole));
-}
-
-@mixin grid-push($part, $whole) {
-  left: percentage(($part / $whole));
-  right: auto;
-}
-
-@mixin grid-offset($part, $whole) {
-  margin-left: percentage(($part / $whole));
-}
-
-@mixin grid-center($part, $whole) {
-  margin-left: percentage(($part / $whole));
-  margin-left: auto;
-  margin-right: auto;
-  float: none;
-}
-
-@mixin grid-flow($side) {
-  margin-left: 0;
-  margin-right: 0;
-  float: $side;
-}
-
-/*
-  -----------------------------------------------
-  ## CSS Output
-  -----------------------------------------------
-*/
-
-/*
-  ### Group
-*/
-
-.#{unit-group-name()} {
+@mixin group {
   @include clearfix;
   clear: both;
   width: 100%;
 }
 
-/*
-  ### Span
-*/
+@mixin span($part, $whole) {
+  @include _span-base;
+  @include _span-size($part, $whole);
+}
 
-@each $breakpoint in $breakpoints {
+@mixin pull($part, $whole) {
+  left: auto;
+  right: percentage(($part / $whole));
+}
 
-  $size: key($breakpoint);
-  $declaration: value($breakpoint);
+@mixin push($part, $whole) {
+  left: percentage(($part / $whole));
+  right: auto;
+}
 
-  @media #{$declaration} {
-    @include grid-unit-base($units, $size);
-    @each $unit in $units {
-      $part:  key($unit);
-      $whole: value($unit);
-      .#{unit-name($part, $whole, $size)} {       // Base unit
-        @include grid-unit($part, $whole);
-      }
-      .#{pull-name($part, $whole, $size)} {       // Pull
-        @include grid-pull($part, $whole);
-      }
-      .#{push-name($part, $whole, $size)} {       // Push
-        @include grid-push($part, $whole);
-      }
-      .#{offset-name($part, $whole, $size)} {     // Offset
-        @include grid-offset($part, $whole);
-      }
-      .#{center-name($part, $whole, $size)} {     // Centering
-        @include grid-center($part, $whole);
-      }
-      .#{flow-left-name($part, $whole, $size)} {  // Flow Left
-        @include grid-flow(left);
-      }
-      .#{flow-right-name($part, $whole, $size)} { // Flow Right
-        @include grid-flow(right);
-      }
-    }
+@mixin offset($part, $whole) {
+  margin-left: percentage(($part / $whole));
+}
 
+@mixin offset-none {
+  margin-left: 0;
+}
+
+@mixin flow($side) {
+  float: $side;
+  margin-#{$side}: 0;
+}
+
+@mixin center {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin grid-install {
+  .group {
+    @include group;
   }
+
+  @each $breakpoint in $breakpoints {
+
+    $size: key($breakpoint);
+    $declaration: value($breakpoint);
+
+    @media #{$declaration} {
+      $classed-units: ();
+      @each $unit in $units {
+        $part:  key($unit);
+        $whole: value($unit);
+        $classed-units: append($classed-units, ".#{_grid-part-name('span', $part, $whole, $size)}");
+      }
+
+      #{list-to-string($classed-units, ', ')} {
+        @include _span-base;
+      }
+
+      @each $unit in $units {
+        $part:  key($unit);
+        $whole: value($unit);
+        .#{_grid-part-name('span', $part, $whole, $size)} {
+          @include _span-size($part, $whole);
+        }
+        .#{_grid-part-name('pull', $part, $whole, $size)} {
+          @include pull($part, $whole);
+        }
+        .#{_grid-part-name('push', $part, $whole, $size)} {
+          @include push($part, $whole);
+        }
+        .#{_grid-part-name('offset', $part, $whole, $size)} {
+          @include offset($part, $whole);
+        }
+        .#{_grid-size-name('center', $size)} {
+          @include center;
+        }
+        .#{_grid-size-name('flow-left', $size)} {
+          @include flow(left);
+        }
+        .#{_grid-size-name('flow-right', $size)} {
+          @include flow(right);
+        }
+      }
+
+      .#{_grid-size-name('offset-none', $size)} {
+        @include offset-none;
+      }
+
+    }
+  }
+}
+
+
+//
+// Private API
+//
+
+@function _grid-size-name($name, $size: '') {
+  @return prefix($name, $size, '-');
+}
+
+@function _grid-part-name($name, $part, $whole, $size: '') {
+  $part-name: prefix("#{$part}of#{$whole}", $name, '-');
+  @return _grid-size-name($part-name, $size);
+}
+
+@mixin _span-base {
+  display: block;
+  float: left;
+  min-height: 1px;
+  position: relative;
+}
+
+@mixin _span-size($part, $whole) {
+  width: percentage(($part / $whole));
 }
