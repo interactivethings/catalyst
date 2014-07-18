@@ -30,17 +30,8 @@
 }
 
 @mixin gutter($size: '') {
-  $space: map-get($spaces, $size);
-  overflow: hidden;
-  & > .group {
-    margin-left: -$space;
-    width: 100%; // Fallback
-    width: calc(100% + 2 * #{$space});
-    & > [class*="span-"] {
-      padding-left: $space;
-      padding-right: $space;
-    }
-  }
+  @include _gutter-base;
+  @include _gutter-size($size);
 }
 
 @mixin span($part, $whole) {
@@ -78,10 +69,25 @@
 }
 
 @mixin grid-install {
+  //
+  // Shared styles
+  //
   .group {
     @include group;
   }
 
+  #{_size-list-of-selectors('gutter')} {
+    @include _gutter-base;
+  }
+
+  #{_part-list-of-selectors('span')} {
+    @include _span-base;
+  }
+
+
+  //
+  // Breakpoint specific styles
+  //
   @each $breakpoint in $breakpoints {
 
     $size: key($breakpoint);
@@ -92,20 +98,9 @@
       @each $space in $spaces {
         $space-name: key($space);
         $selector: "gutter-#{$space-name}";
-        &.#{_grid-size-name($selector, $size)} {
-          @include gutter($space-name);
+        .#{_grid-size-name($selector, $size)} {
+          @include _gutter-size($space-name);
         }
-      }
-
-      $classed-units: ();
-      @each $unit in $units {
-        $part:  key($unit);
-        $whole: value($unit);
-        $classed-units: append($classed-units, ".#{_grid-part-name('span', $part, $whole, $size)}");
-      }
-
-      #{list-to-string($classed-units, ', ')} {
-        @include _span-base;
       }
 
       @each $unit in $units {
@@ -154,6 +149,49 @@
 @function _grid-part-name($name, $part, $whole, $size: '') {
   $part-name: prefix("#{$part}of#{$whole}", $name, '-');
   @return _grid-size-name($part-name, $size);
+}
+
+@function _size-list-of-selectors($basename) {
+  $selectors: ();
+  @each $breakpoint in $breakpoints {
+    $size: key($breakpoint);
+    @each $space in $spaces {
+      $space-name: key($space);
+      $selector: "#{$basename}-#{$space-name}";
+      $selectors: append($selectors, ".#{_grid-size-name($selector, $size)}");
+    }
+  }
+  @return list-to-string($selectors, ', ');
+}
+
+@function _part-list-of-selectors($basename) {
+  $selectors: ();
+  @each $breakpoint in $breakpoints {
+    $size: key($breakpoint);
+    @each $unit in $units {
+      $part:  key($unit);
+      $whole: value($unit);
+      $selectors: append($selectors, ".#{_grid-part-name($basename, $part, $whole, $size)}");
+    }
+  }
+  @return list-to-string($selectors, ', ');
+}
+
+@mixin _gutter-base {
+  overflow: hidden;
+}
+
+@mixin _gutter-size($size: '') {
+  $space: map-get($spaces, $size);
+  & > .group {
+    margin-left: -$space;
+    width: 100%; // Fallback
+    width: calc(100% + 2 * #{$space});
+    & > [class*="span-"] {
+      padding-left: $space;
+      padding-right: $space;
+    }
+  }
 }
 
 @mixin _span-base {
