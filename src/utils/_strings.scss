@@ -1,0 +1,15 @@
+// Create a new string with a prefix
+// Example: prefix('span', 'x', '-') => "x-span"
+@function prefix($str, $prefix: '', $separator: '') {
+  @return when-str-present($prefix, $prefix + $separator + $str, $str);
+}
+
+// Create a new string with a suffix
+// Example: suffix('span', 'x', '-') => "span-x"
+@function suffix($str, $suffix: '', $sep: '') {
+  @return when-str-present($suffix, $str + $sep + $suffix, $str);
+}
+
+@function when-str-present($str, $then, $fallback) {
+  @return if($str == '', $fallback, $then);
+}

@@ -1,0 +1,9 @@
+@import "../globals";
+
+//
+// Functions
+//
+
+@function space($key) {
+  @return list-get($spaces, $key);
+}

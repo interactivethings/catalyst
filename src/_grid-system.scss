@@ -4,7 +4,7 @@
  * grid-install         - make the grid classes available to css
  *
  * group                - a group of spans
- * gutter (size)        - wraps around a group, spans will have gutters
+ * gutter (space)       - wraps around a group, spans will have gutters
  * span   (part, whole) - a column with a percentage based width
  *
  * pull   (part, whole) - reposition a span to the left
@@ -17,6 +17,10 @@
  */
 
 @import "globals";
+@import "utils/layout";
+@import "utils/media-query";
+@import "utils/spaces";
+@import "utils/strings";
 
 
 //
@@ -29,28 +33,28 @@
   width: 100%;
 }
 
-@mixin gutter($size: '') {
+@mixin gutter($space) {
   @include _gutter-base;
-  @include _gutter-size($size);
+  @include _gutter($space);
 }
 
 @mixin span($part, $whole) {
   @include _span-base;
-  @include _span-size($part, $whole);
+  @include _span($part, $whole);
 }
 
 @mixin pull($part, $whole) {
   left: auto;
-  right: percentage(($part / $whole));
+  right: percentage($part / $whole);
 }
 
 @mixin push($part, $whole) {
-  left: percentage(($part / $whole));
+  left: percentage($part / $whole);
   right: auto;
 }
 
 @mixin offset($part, $whole) {
-  margin-left: percentage(($part / $whole));
+  margin-left: percentage($part / $whole);
 }
 
 @mixin offset-none {
@@ -76,11 +80,11 @@
     @include group;
   }
 
-  #{_size-list-of-selectors('gutter')} {
+  #{_space-selectors('gutter')} {
     @include _gutter-base;
   }
 
-  #{_part-list-of-selectors('span')} {
+  #{_proportion-selectors('span')} {
     @include _span-base;
   }
 
@@ -88,48 +92,43 @@
   //
   // Breakpoint specific styles
   //
-  @each $breakpoint in $breakpoints {
+  @each $breakpoint in list-keys($breakpoints) {
 
-    $size: key($breakpoint);
-    $declaration: value($breakpoint);
+    @include breakpoint($breakpoint) {
 
-    @media #{$declaration} {
-
-      @each $space in $spaces {
-        $space-name: key($space);
-        $selector: "gutter-#{$space-name}";
-        .#{_grid-size-name($selector, $size)} {
-          @include _gutter-size($space-name);
+      @each $space in list-keys($spaces) {
+        .#{_space-selector('gutter', $space, $breakpoint)} {
+          @include _gutter($space);
         }
       }
 
-      @each $unit in $units {
-        $part:  key($unit);
-        $whole: value($unit);
-        .#{_grid-part-name('span', $part, $whole, $size)} {
-          @include _span-size($part, $whole);
+      @each $proportion in $proportions {
+        $part:  key($proportion);
+        $whole: value($proportion);
+        .#{_proportion-selector('span', $part, $whole, $breakpoint)} {
+          @include _span($part, $whole);
         }
-        .#{_grid-part-name('pull', $part, $whole, $size)} {
+        .#{_proportion-selector('pull', $part, $whole, $breakpoint)} {
           @include pull($part, $whole);
         }
-        .#{_grid-part-name('push', $part, $whole, $size)} {
+        .#{_proportion-selector('push', $part, $whole, $breakpoint)} {
           @include push($part, $whole);
         }
-        .#{_grid-part-name('offset', $part, $whole, $size)} {
+        .#{_proportion-selector('offset', $part, $whole, $breakpoint)} {
           @include offset($part, $whole);
         }
-        .#{_grid-size-name('center', $size)} {
+        .#{_breakpoint-selector('center', $breakpoint)} {
           @include center;
         }
-        .#{_grid-size-name('flow-left', $size)} {
+        .#{_breakpoint-selector('flow-left', $breakpoint)} {
           @include flow(left);
         }
-        .#{_grid-size-name('flow-right', $size)} {
+        .#{_breakpoint-selector('flow-right', $breakpoint)} {
           @include flow(right);
         }
       }
 
-      .#{_grid-size-name('offset-none', $size)} {
+      .#{_breakpoint-selector('offset-none', $breakpoint)} {
         @include offset-none;
       }
 
@@ -142,54 +141,56 @@
 // Private API
 //
 
-@function _grid-size-name($name, $size: '') {
-  @return prefix($name, $size, '-');
+@function _breakpoint-selector($name, $breakpoint: '') {
+  @return prefix($name, $breakpoint, '-');
 }
 
-@function _grid-part-name($name, $part, $whole, $size: '') {
-  $part-name: prefix("#{$part}of#{$whole}", $name, '-');
-  @return _grid-size-name($part-name, $size);
+@function _proportion-selector($name, $part, $whole, $breakpoint: '') {
+  $proportion: prefix("#{$part}of#{$whole}", $name, '-');
+  @return prefix($proportion, $breakpoint, '-');
 }
 
-@function _size-list-of-selectors($basename) {
+@function _proportion-selectors($name) {
   $selectors: ();
-  @each $breakpoint in $breakpoints {
-    $size: key($breakpoint);
-    @each $space in $spaces {
-      $space-name: key($space);
-      $selector: "#{$basename}-#{$space-name}";
-      $selectors: append($selectors, ".#{_grid-size-name($selector, $size)}");
+  @each $breakpoint in list-keys($breakpoints) {
+    @each $proportion in $proportions {
+      $part:  key($proportion);
+      $whole: value($proportion);
+      $selector: prefix(_proportion-selector($name, $part, $whole, $breakpoint), '.');
+      $selectors: append($selectors, $selector);
     }
   }
-  @return list-to-string($selectors, ', ');
+  @return list-flatten($selectors, ', ');
 }
 
-@function _part-list-of-selectors($basename) {
+@function _space-selector($name, $space: '', $breakpoint: '') {
+  @return prefix(suffix($name, $space, '-'), $breakpoint, '-');
+}
+
+@function _space-selectors($name) {
   $selectors: ();
-  @each $breakpoint in $breakpoints {
-    $size: key($breakpoint);
-    @each $unit in $units {
-      $part:  key($unit);
-      $whole: value($unit);
-      $selectors: append($selectors, ".#{_grid-part-name($basename, $part, $whole, $size)}");
+  @each $breakpoint in list-keys($breakpoints) {
+    @each $space in list-keys($spaces) {
+      $selector: prefix(_space-selector($name, $space, $breakpoint), '.');
+      $selectors: append($selectors, $selector);
     }
   }
-  @return list-to-string($selectors, ', ');
+  @return list-flatten($selectors, ', ');
 }
 
 @mixin _gutter-base {
   overflow: hidden;
 }
 
-@mixin _gutter-size($size: '') {
-  $space: map-get($spaces, $size);
+@mixin _gutter($space) {
+  $gutter: space($space);
   & > .group {
-    margin-left: -$space;
+    margin-left: -$gutter;
     width: 100%; // Fallback
-    width: calc(100% + 2 * #{$space});
+    width: calc(100% + #{2 * $gutter});
     & > [class*="span-"] {
-      padding-left: $space;
-      padding-right: $space;
+      padding-left: $gutter;
+      padding-right: $gutter;
     }
   }
 }
@@ -201,6 +202,6 @@
   position: relative;
 }
 
-@mixin _span-size($part, $whole) {
-  width: percentage(($part / $whole));
+@mixin _span($part, $whole) {
+  width: percentage($part / $whole);
 }

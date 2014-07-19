@@ -1,0 +1,45 @@
+@function key($tuple) {
+  @return nth($tuple, 1);
+}
+
+@function value($tuple) {
+  @return nth($tuple, 2);
+}
+
+@function list-get($list, $key) {
+  @each $tuple in $list {
+    @if key($tuple) == $key { @return value($tuple); }
+  }
+  @warn "Key #{$key} not found in list #{$list}";
+  @return null;
+}
+
+@function list-keys($list) {
+  $result: ();
+  @each $tuple in $list {
+    $result: append($result, key($tuple));
+  }
+  @return $result;
+}
+
+@function list-values($list) {
+  $result: ();
+  @each $tuple in $list {
+    $result: append($result, value($tuple));
+  }
+  @return $result;
+}
+
+@function list-flatten($list, $glue: '', $is-nested: false) {
+  $result: null;
+  @for $i from 1 through length($list) {
+    $e: nth($list, $i);
+    @if type-of($e) == list {
+      $result: $result#{list-flatten($e, $glue, true)};
+    }
+    @else {
+      $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+    }
+  }
+  @return $result;
+}

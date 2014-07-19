@@ -1,0 +1,34 @@
+@import "../globals";
+
+//
+// Mixins
+//
+
+@mixin breakpoint($key) {
+  @media #{breakpoint($key)} { @content; }
+}
+
+
+//
+// Functions
+//
+
+@function breakpoint($key) {
+  @return list-get($breakpoints, $key);
+}
+
+@function orientation($key) {
+  @return list-get($orientations, $key);
+}
+
+@function range($key) {
+  @return list-get($ranges, $key);
+}
+
+@function range-start($key) {
+  @return key(range($key));
+}
+
+@function range-end($key) {
+  @return value(range($key));
+}
