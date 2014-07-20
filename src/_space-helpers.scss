@@ -1,103 +1,100 @@
-/*
-  ===============================================
-  # SPACING HELPERS
-  ===============================================
-  Spaces can be used to modify the spacing between objects. The class
-  names have the format (type)(sides)(space), resulting in classes like
-  .pvs (padding, vertical, small), .mhl (margin, horizontal, large), etc.
-  p, m = padding, margin
-  a, t, r, b, l, h, v = all, top, right, bottom, left, horizontal, vertical
-  x, s, m, l, h = spaces
-  n - No space
-  x - Extra small space
-  s - Small space
-  m - Medium space
-  l - Large space
-  h - Huge space
-  ===============================================
-*/
+/**
+ * Catalyst Spaces
+ *
+ * Spaces define the distance beween components in a layout. They follow
+ * a brief but powerful naming convention:
+ *
+ *                               TYPE       SIDES         SPACE
+ *     <div class="plm"></div>   <p>adding  <l>eft        <m>edium
+ *     <div class="mbs"></div>   <m>argin   <b>ottom      <s>mall
+ *     <div class="pvs"></div>   <p>adding  <v>ertical    <s>mall
+ *     <div class="mhl"></div>   <m>argin   <h>orizontal  <l>arge
+ *
+ * Types  - <p>adding, <m>argin
+ * Sides  - <a>ll, <t>op, <r>ight, <b>ottom, <l>eft, <h>orizontal, <v>ertical
+ * Spaces - As defined in the global $spaces variable, e.g. <n>one, <s>mall, <l>arge
+ *
+ * spaces-install           - make the grid classes available to css
+ * space(type, side, space) - set margin/padding according to space definition
+ */
 
-// Import core Globals
 @import "globals";
+@import "utils/media-query";
+@import "utils/spaces";
+@import "utils/strings";
 
-// Wrap viewport size in a prefix
-@function space-name($name, $viewport) {
-  @return prefix($viewport, $name, '-');
+
+//
+// Public API
+//
+
+@mixin space($type, $side, $space) {
+  @each $side in list-get($__spaces_space-sides, $side) {
+    #{list-get($__spaces_space_types, $type)}-#{$side}: #{space($space)};
+  }
 }
 
-/*
-  -----------------------------------------------
-  ## Space Name
-  -----------------------------------------------
-*/
+@mixin spaces-install {
+  @each $breakpoint in list-keys($breakpoints) {
 
-/*
-  ### The saucy Spacing logic
-*/
+    @include breakpoint($breakpoint) {
+      @each $space in list-keys($spaces) {
+        @each $type in (p, m) {
+          #{__spaces_space-selectors($type, (a, v, t), $space, $breakpoint)} {
+            #{__spaces_type_property($type, top)}: space($space) !important;
+          }
 
-@mixin spacing($viewport) {
-  @each $space-variable in $spaces {
+          #{__spaces_space-selectors($type, (a, v, b), $space, $breakpoint)} {
+            #{__spaces_type_property($type, bottom)}: space($space) !important;
+          }
 
-    $name     : key($space-variable);
-    $value    : value($space-variable);
-    $sides    : t top, r right, b bottom, l left;
-    $context  : if($viewport == '', '', '#{$viewport}-');
+          #{__spaces_space-selectors($type, (a, h, r), $space, $breakpoint)} {
+            #{__spaces_type_property($type, right)}: space($space) !important;
+          }
 
-    .#{$context}pt#{$name},
-    .#{$context}pv#{$name},
-    .#{$context}pa#{$name} {
-      padding-top: $value !important;
-    }
-    .#{$context}pr#{$name},
-    .#{$context}ph#{$name},
-    .#{$context}pa#{$name} {
-      padding-right: $value !important;
-    }
-    .#{$context}pb#{$name},
-    .#{$context}pv#{$name},
-    .#{$context}pa#{$name} {
-      padding-bottom: $value !important;
-    }
-    .#{$context}pl#{$name},
-    .#{$context}ph#{$name},
-    .#{$context}pa#{$name} {
-      padding-left: $value !important;
-    }
-    .#{$context}mt#{$name},
-    .#{$context}mv#{$name},
-    .#{$context}ma#{$name} {
-      margin-top: $value !important;
-    }
-    .#{$context}mr#{$name},
-    .#{$context}mh#{$name},
-    .#{$context}ma#{$name} {
-      margin-right: $value !important;
-    }
-    .#{$context}mb#{$name},
-    .#{$context}mv#{$name},
-    .#{$context}ma#{$name} {
-      margin-bottom: $value !important;
-    }
-    .#{$context}ml#{$name},
-    .#{$context}mh#{$name},
-    .#{$context}ma#{$name} {
-      margin-left: $value !important;
+          #{__spaces_space-selectors($type, (a, h, l), $space, $breakpoint)} {
+            #{__spaces_type_property($type, left)}: space($space) !important;
+          }
+        }
+      }
     }
 
   }
 }
 
-/*
-  ### CSS Output
-*/
 
-@each $breakpoint in $breakpoints {
+//
+// Private API
+//
 
-  $viewport     : key($breakpoint);
-  $declaration  : value($breakpoint);
+$__spaces_space_types: (
+  'p' padding,
+  'm' margin
+);
 
-  @media #{$declaration} {
-    @include spacing($viewport);
+$__spaces_space-sides: (
+  'a' (top right bottom left),
+  'v' (top bottom),
+  'h' (left right),
+  't' (top),
+  'r' (right),
+  'b' (bottom),
+  'l' (left)
+);
+
+@function __spaces_type_property($type, $suffix) {
+  @return suffix(list-get($__spaces_space_types, $type), $suffix, '-');
+}
+
+@function __spaces_space-selector($type, $side, $space, $breakpoint) {
+  @return prefix($type + $side + $space, $breakpoint, '-');
+}
+
+@function __spaces_space-selectors($type, $sides, $space, $breakpoint) {
+  $selectors: ();
+  @each $side in $sides {
+    $selector: prefix(__spaces_space-selector($type, $side, $space, $breakpoint), '.');
+    $selectors: append($selectors, $selector);
   }
-
+  @return list-flatten($selectors, ', ');
 }
