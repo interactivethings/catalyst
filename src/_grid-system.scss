@@ -34,13 +34,13 @@
 }
 
 @mixin gutter($space) {
-  @include _gutter-base;
-  @include _gutter($space);
+  @include __grid_gutter-base;
+  @include __grid_gutter($space);
 }
 
 @mixin span($part, $whole) {
-  @include _span-base;
-  @include _span($part, $whole);
+  @include __grid_span-base;
+  @include __grid_span($part, $whole);
 }
 
 @mixin pull($part, $whole) {
@@ -80,12 +80,12 @@
     @include group;
   }
 
-  #{_space-selectors('gutter')} {
-    @include _gutter-base;
+  #{__grid_space-selectors('gutter')} {
+    @include __grid_gutter-base;
   }
 
-  #{_proportion-selectors('span')} {
-    @include _span-base;
+  #{__grid_proportion-selectors('span')} {
+    @include __grid_span-base;
   }
 
 
@@ -97,38 +97,38 @@
     @include breakpoint($breakpoint) {
 
       @each $space in list-keys($spaces) {
-        .#{_space-selector('gutter', $space, $breakpoint)} {
-          @include _gutter($space);
+        .#{__grid_space-selector('gutter', $space, $breakpoint)} {
+          @include __grid_gutter($space);
         }
       }
 
       @each $proportion in $proportions {
         $part:  key($proportion);
         $whole: value($proportion);
-        .#{_proportion-selector('span', $part, $whole, $breakpoint)} {
-          @include _span($part, $whole);
+        .#{__grid_proportion-selector('span', $part, $whole, $breakpoint)} {
+          @include __grid_span($part, $whole);
         }
-        .#{_proportion-selector('pull', $part, $whole, $breakpoint)} {
+        .#{__grid_proportion-selector('pull', $part, $whole, $breakpoint)} {
           @include pull($part, $whole);
         }
-        .#{_proportion-selector('push', $part, $whole, $breakpoint)} {
+        .#{__grid_proportion-selector('push', $part, $whole, $breakpoint)} {
           @include push($part, $whole);
         }
-        .#{_proportion-selector('offset', $part, $whole, $breakpoint)} {
+        .#{__grid_proportion-selector('offset', $part, $whole, $breakpoint)} {
           @include offset($part, $whole);
         }
-        .#{_breakpoint-selector('center', $breakpoint)} {
+        .#{__grid_breakpoint-selector('center', $breakpoint)} {
           @include center;
         }
-        .#{_breakpoint-selector('flow-left', $breakpoint)} {
+        .#{__grid_breakpoint-selector('flow-left', $breakpoint)} {
           @include flow(left);
         }
-        .#{_breakpoint-selector('flow-right', $breakpoint)} {
+        .#{__grid_breakpoint-selector('flow-right', $breakpoint)} {
           @include flow(right);
         }
       }
 
-      .#{_breakpoint-selector('offset-none', $breakpoint)} {
+      .#{__grid_breakpoint-selector('offset-none', $breakpoint)} {
         @include offset-none;
       }
 
@@ -141,48 +141,48 @@
 // Private API
 //
 
-@function _breakpoint-selector($name, $breakpoint: '') {
+@function __grid_breakpoint-selector($name, $breakpoint: '') {
   @return prefix($name, $breakpoint, '-');
 }
 
-@function _proportion-selector($name, $part, $whole, $breakpoint: '') {
+@function __grid_proportion-selector($name, $part, $whole, $breakpoint: '') {
   $proportion: prefix("#{$part}of#{$whole}", $name, '-');
   @return prefix($proportion, $breakpoint, '-');
 }
 
-@function _proportion-selectors($name) {
+@function __grid_proportion-selectors($name) {
   $selectors: ();
   @each $breakpoint in list-keys($breakpoints) {
     @each $proportion in $proportions {
       $part:  key($proportion);
       $whole: value($proportion);
-      $selector: prefix(_proportion-selector($name, $part, $whole, $breakpoint), '.');
+      $selector: prefix(__grid_proportion-selector($name, $part, $whole, $breakpoint), '.');
       $selectors: append($selectors, $selector);
     }
   }
   @return list-flatten($selectors, ', ');
 }
 
-@function _space-selector($name, $space: '', $breakpoint: '') {
+@function __grid_space-selector($name, $space: '', $breakpoint: '') {
   @return prefix(suffix($name, $space, '-'), $breakpoint, '-');
 }
 
-@function _space-selectors($name) {
+@function __grid_space-selectors($name) {
   $selectors: ();
   @each $breakpoint in list-keys($breakpoints) {
     @each $space in list-keys($spaces) {
-      $selector: prefix(_space-selector($name, $space, $breakpoint), '.');
+      $selector: prefix(__grid_space-selector($name, $space, $breakpoint), '.');
       $selectors: append($selectors, $selector);
     }
   }
   @return list-flatten($selectors, ', ');
 }
 
-@mixin _gutter-base {
+@mixin __grid_gutter-base {
   overflow: hidden;
 }
 
-@mixin _gutter($space) {
+@mixin __grid_gutter($space) {
   $gutter: space($space);
   & > .group {
     margin-left: -$gutter;
@@ -195,13 +195,13 @@
   }
 }
 
-@mixin _span-base {
+@mixin __grid_span-base {
   display: block;
   float: left;
   min-height: 1px;
   position: relative;
 }
 
-@mixin _span($part, $whole) {
+@mixin __grid_span($part, $whole) {
   width: percentage($part / $whole);
 }
