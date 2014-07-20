@@ -7,11 +7,6 @@
 // Import core Utils
 @import "utils/functions";
 
-// Wrap viewport size in a prefix
-@function space-name($name, $viewport) {
-  @return prefix($viewport, $name, '-');
-}
-
 /*
   -----------------------------------------------
   ## Box Model Helpers

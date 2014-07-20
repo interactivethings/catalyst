@@ -7,10 +7,6 @@
 // Import core Utils
 @import "globals";
 
-// Wrap orientation in a prefix
-@function orientation-name($name, $orientation) {
-  @return prefix($orientation, $name, '-');
-}
 
 %show-base {
   display: none !important;
