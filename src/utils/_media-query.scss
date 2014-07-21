@@ -4,10 +4,27 @@
 // Mixins
 //
 
-@mixin breakpoint($key) {
-  @media #{breakpoint($key)} { @content; }
-}
+@mixin breakpoint($key, $restriction: '') {
+  $first: if(index(list-keys($ranges), $key) == 1, true, false);
+  $last:  if(index(list-keys($ranges), $key) == length($ranges), true, false);
 
+  @if $key == '' {
+    @content;
+  } @else {
+    @if $restriction == 'only' {
+      $query: 'only screen and (min-width:#{range-start($key)}) and (max-width:#{range-end($key)})';
+    } @else if $restriction == 'down' {
+      $query: 'only screen and (max-width:#{range-end($key)})';
+    } @else {
+      @if $first {
+        $query: 'only screen';
+      } @else {
+        $query: 'only screen and (min-width:#{range-start($key)})';
+      }
+    }
+    @media #{unquote($query)} { @content; }
+  }
+}
 
 //
 // Functions
@@ -15,10 +32,6 @@
 
 @function breakpoint($key) {
   @return list-get($breakpoints, $key);
-}
-
-@function orientation($key) {
-  @return list-get($orientations, $key);
 }
 
 @function range($key) {

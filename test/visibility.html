@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visibility – Catalyst Test</title>
+
+  <link rel="stylesheet" href="../catalyst.css">
+  <link rel="stylesheet" href="test.css">
+  <style type="text/css">
+  .left-right {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAJElEQVQImT2JsQ0AMAyDyP+/2ieQIWqZEJDEx6gA0JZr9/mmLgUWKQ+z/AZWAAAAAElFTkSuQmCC");
+    border: 1px solid #333;
+    height: 60px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    width: 120px;
+  }
+  .left-right > div {
+    height: 60px;
+    width: 60px;
+  }
+  .left-right > div:first-child {
+    background: #eee;
+    float: left;
+  }
+  .left-right > div:last-child {
+    background: #ddd;
+    float: right;
+  }
+  </style>
+</head>
+<body>
+
+  <h2>Basics</h2>
+
+  <div class="left-right">
+    <div class="hide">hide</div>
+    <div>show</div>
+  </div>
+
+  <h2>Responsive default</h2>
+
+  <div class="left-right">
+    <div class="s-hide">hide</div>
+    <div>show</div>
+  </div>
+
+  <h2>Responsive down</h2>
+
+  <div class="left-right">
+    <div class="m-hide">hide m-up</div>
+    <div class="m-hide-down">hide m-down</div>
+  </div>
+
+  <h2>Responsive only</h2>
+
+  <div class="left-right">
+    <div class="s-hide-only">hide s-only</div>
+    <div class="m-hide-only">hide m-only</div>
+  </div>
+
+</body>
+</html>

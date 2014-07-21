@@ -21,11 +21,6 @@ $breakpoints: (
   'l'   'only screen and (min-width:#{key(list-get($ranges, "l"))})'
 )!default;
 
-$orientations: (
-  'v'   'only screen and (orientation: portrait)',
-  'h'   'only screen and (orientation: landscape)'
-)!default;
-
 
 //
 // Grid proportions

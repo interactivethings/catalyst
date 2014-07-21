@@ -1,0 +1,75 @@
+/**
+ * Catalyst Visibility
+ *
+ * Hide elements for certain viewports. There is no 'show' element
+ * because that would break some display properties. Instead, be
+ * precise with hiding things and use the provided classes for hiding.
+ *
+ * visibility-install - make the visibility classes available to CSS
+
+ * hide(breakpoint)   - hide for a breakpoint
+ *                      available as .hide, .hide-down, .hide-only
+ *                      and as .v-hide, .h-hide for screen orientation
+ *                      (portrait, landscape)
+ */
+
+@import "globals";
+@import "utils/strings";
+
+
+//
+// Public API
+//
+
+@mixin hide {
+  display: none;
+}
+
+@mixin visibility-install {
+
+  .hide {
+    display: none !important;
+  }
+
+  @each $range in list-keys($ranges) {
+    @include breakpoint($range) {
+      .#{__visibility_breakpoint-selector('hide', $range)} {
+        display: none !important;
+      }
+    }
+
+    @include breakpoint($range, 'down') {
+      .#{__visibility_breakpoint-selector('hide-down', $range)} {
+        display: none !important;
+      }
+    }
+
+    @include breakpoint($range, 'only') {
+      .#{__visibility_breakpoint-selector('hide-only', $range)} {
+        display: none !important;
+      }
+    }
+  }
+
+  @media only screen and (orientation: portrait) {
+    .#{__visibility_breakpoint-selector('hide-only', 'v')} {
+      display: none !important;
+    }
+  }
+
+  @media only screen and (orientation: landscape) {
+    .#{__visibility_breakpoint-selector('hide-only', 'h')} {
+      display: none !important;
+    }
+  }
+
+}
+
+
+//
+// Private API
+//
+
+@function __visibility_breakpoint-selector($selector, $breakpoint) {
+  @return prefix($selector, $breakpoint, '-');
+}
