@@ -35,7 +35,7 @@
 }
 
 @mixin spaces-install {
-  @each $breakpoint in list-keys($breakpoints) {
+  @each $breakpoint in join('', list-keys($ranges)) {
 
     @include breakpoint($breakpoint) {
       @each $space in list-keys($spaces) {

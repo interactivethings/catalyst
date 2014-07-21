@@ -30,10 +30,6 @@
 // Functions
 //
 
-@function breakpoint($key) {
-  @return list-get($breakpoints, $key);
-}
-
 @function range($key) {
   @return list-get($ranges, $key);
 }

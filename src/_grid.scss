@@ -92,7 +92,7 @@
   //
   // Breakpoint specific styles
   //
-  @each $breakpoint in list-keys($breakpoints) {
+  @each $breakpoint in join('', list-keys($ranges)) {
 
     @include breakpoint($breakpoint) {
 
@@ -152,7 +152,7 @@
 
 @function __grid_proportion-selectors($name) {
   $selectors: ();
-  @each $breakpoint in list-keys($breakpoints) {
+  @each $breakpoint in join('', list-keys($ranges)) {
     @each $proportion in $proportions {
       $part:  key($proportion);
       $whole: value($proportion);
@@ -169,7 +169,7 @@
 
 @function __grid_space-selectors($name) {
   $selectors: ();
-  @each $breakpoint in list-keys($breakpoints) {
+  @each $breakpoint in join('', list-keys($ranges)) {
     @each $space in list-keys($spaces) {
       $selector: prefix(__grid_space-selector($name, $space, $breakpoint), '.');
       $selectors: append($selectors, $selector);

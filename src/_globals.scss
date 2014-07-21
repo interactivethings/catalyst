@@ -14,13 +14,6 @@ $ranges: (
   'l'   (64.063em, 90em)  // 1440px
 )!default;
 
-$breakpoints: (
-  ''    'only screen',
-  's'   'only screen',
-  'm'   'only screen and (min-width:#{key(list-get($ranges, "m"))})',
-  'l'   'only screen and (min-width:#{key(list-get($ranges, "l"))})'
-)!default;
-
 
 //
 // Grid proportions

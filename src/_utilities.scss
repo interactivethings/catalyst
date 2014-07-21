@@ -4,12 +4,15 @@
  * utilities-install - make the utility classes available to CSS
  */
 
+@import "globals";
 @import "utils/layout";
+@import "utils/media-query";
+@import "utils/strings";
 
 @mixin utilities-install {
   .clearfix { @include clearfix; }
 
-  @each $breakpoint in list-keys($breakpoints) {
+  @each $breakpoint in join('', list-keys($ranges)) {
     @include breakpoint($breakpoint) {
       .#{prefix('float-left',  $breakpoint, '-')} { float: left  !important; }
       .#{prefix('float-right', $breakpoint, '-')} { float: right !important; }
