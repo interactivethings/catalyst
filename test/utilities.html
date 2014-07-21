@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Utilities – Catalyst Test</title>
+
+  <link rel="stylesheet" href="../catalyst.css">
+  <link rel="stylesheet" href="test.css">
+  <style type="text/css">
+  .boxes {
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .box {
+    background: #ddd;
+    height: 60px;
+    margin-bottom: 1px;
+    width: 120px;
+  }
+  </style>
+</head>
+<body>
+
+  <h2>Clearfix</h2>
+
+  <div class="clearfix" style="border: 1px solid #333">
+    <div class="box" style="float: left"></div>
+  </div>
+
+  <h2>Float</h2>
+
+  <div class="boxes">
+    <div class="box float-left">left</div>
+    <div class="box float-right">right</div>
+  </div>
+
+  <div class="boxes">
+    <div class="box s-float-right m-float-left">left</div>
+    <div class="box s-float-left m-float-right">right</div>
+  </div>
+
+  <h2>Alignment</h2>
+
+  <div class="boxes">
+    <div class="box align-left">left</div>
+    <div class="box align-center">center</div>
+    <div class="box align-right">right</div>
+    <div class="box align-justify">justify jus justify jus justify</div>
+  </div>
+
+  <div class="boxes">
+    <div class="box s-align-left m-align-right">left</div>
+    <div class="box s-align-center m-align-none">center</div>
+  </div>
+
+</body>
+</html>

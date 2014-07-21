@@ -1,0 +1,25 @@
+/**
+ * Catalyst Utilities
+ *
+ * utilities-install - make the utility classes available to CSS
+ */
+
+@import "utils/layout";
+
+@mixin utilities-install {
+  .clearfix { @include clearfix; }
+
+  @each $breakpoint in list-keys($breakpoints) {
+    @include breakpoint($breakpoint) {
+      .#{prefix('float-left',  $breakpoint, '-')} { float: left  !important; }
+      .#{prefix('float-right', $breakpoint, '-')} { float: right !important; }
+      .#{prefix('float-none',  $breakpoint, '-')} { float: none  !important; }
+
+      .#{prefix('align-left',    $breakpoint, '-')} { text-align: left    !important; }
+      .#{prefix('align-right',   $breakpoint, '-')} { text-align: right   !important; }
+      .#{prefix('align-center',  $breakpoint, '-')} { text-align: center  !important; }
+      .#{prefix('align-justify', $breakpoint, '-')} { text-align: justify !important; }
+      .#{prefix('align-none',    $breakpoint, '-')} { text-align: inherit !important; }
+    }
+  }
+}
