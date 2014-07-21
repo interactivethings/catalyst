@@ -19,7 +19,7 @@
  */
 
 @import "globals";
-@import "utils/media-query";
+@import "utils/breakpoints";
 @import "utils/spaces";
 @import "utils/strings";
 
@@ -35,7 +35,7 @@
 }
 
 @mixin spaces-install {
-  @each $breakpoint in join('', list-keys($ranges)) {
+  @each $breakpoint in join('', list-keys($breakpoints)) {
 
     @include breakpoint($breakpoint) {
       @each $space in list-keys($spaces) {

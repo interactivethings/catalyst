@@ -31,21 +31,21 @@
     display: none !important;
   }
 
-  @each $range in list-keys($ranges) {
-    @include breakpoint($range) {
-      .#{__visibility_breakpoint-selector('hide', $range)} {
+  @each $breakpoint in list-keys($breakpoints) {
+    @include breakpoint($breakpoint) {
+      .#{__visibility_breakpoint-selector('hide', $breakpoint)} {
         display: none !important;
       }
     }
 
-    @include breakpoint($range, 'down') {
-      .#{__visibility_breakpoint-selector('hide-down', $range)} {
+    @include breakpoint($breakpoint, 'down') {
+      .#{__visibility_breakpoint-selector('hide-down', $breakpoint)} {
         display: none !important;
       }
     }
 
-    @include breakpoint($range, 'only') {
-      .#{__visibility_breakpoint-selector('hide-only', $range)} {
+    @include breakpoint($breakpoint, 'only') {
+      .#{__visibility_breakpoint-selector('hide-only', $breakpoint)} {
         display: none !important;
       }
     }

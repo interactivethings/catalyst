@@ -1,0 +1,43 @@
+@import "../globals";
+
+//
+// Mixins
+//
+
+@mixin breakpoint($key, $restriction: '') {
+  $first: if(index(list-keys($breakpoints), $key) == 1, true, false);
+  $last:  if(index(list-keys($breakpoints), $key) == length($breakpoints), true, false);
+
+  @if $key == '' {
+    @content;
+  } @else {
+    @if $restriction == 'only' {
+      $query: 'only screen and (min-width:#{breakpoint-start($key)}) and (max-width:#{breakpoint-end($key)})';
+    } @else if $restriction == 'down' {
+      $query: 'only screen and (max-width:#{breakpoint-end($key)})';
+    } @else {
+      @if $first {
+        $query: 'only screen';
+      } @else {
+        $query: 'only screen and (min-width:#{breakpoint-start($key)})';
+      }
+    }
+    @media #{unquote($query)} { @content; }
+  }
+}
+
+//
+// Functions
+//
+
+@function breakpoint($key) {
+  @return list-get($breakpoints, $key);
+}
+
+@function breakpoint-start($key) {
+  @return key(breakpoint($key));
+}
+
+@function breakpoint-end($key) {
+  @return value(breakpoint($key));
+}

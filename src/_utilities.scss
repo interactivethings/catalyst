@@ -5,14 +5,14 @@
  */
 
 @import "globals";
+@import "utils/breakpoints";
 @import "utils/layout";
-@import "utils/media-query";
 @import "utils/strings";
 
 @mixin utilities-install {
   .clearfix { @include clearfix; }
 
-  @each $breakpoint in join('', list-keys($ranges)) {
+  @each $breakpoint in join('', list-keys($breakpoints)) {
     @include breakpoint($breakpoint) {
       .#{prefix('float-left',  $breakpoint, '-')} { float: left  !important; }
       .#{prefix('float-right', $breakpoint, '-')} { float: right !important; }
