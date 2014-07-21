@@ -1,0 +1,8 @@
+/**
+ * Catalyst Spaces Stylesheet
+ *
+ * Includes only Catalyst spaces.
+ */
+
+@import "spaces";
+@include spaces-install;

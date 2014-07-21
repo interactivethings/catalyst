@@ -1,12 +1,9 @@
 /**
- * Catalyst Core Stylesheet
+ * Catalyst Core Stylesheet without reset
  *
- * Includes everything to quickly get started
- * on new projects.
+ * The full Catalyst package but without the
+ * reset: bring your own reset.
  */
-
-@import "reset";
-@include reset-install;
 
 @import "grid";
 @include grid-install;

@@ -1,0 +1,11 @@
+/**
+ * Catalyst Grid Stylesheet
+ *
+ * Includes only the Catalyst grid.
+ */
+
+@import "reset";
+@include reset-install;
+
+@import "grid";
+@include grid-install;

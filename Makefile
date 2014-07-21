@@ -3,7 +3,9 @@ PATH  := ./bin:node_modules/.bin:$(PATH)
 
 GENERATED_FILES = \
 	catalyst.css \
-	catalyst-scaffold.css
+	catalyst-no-reset.css \
+	catalyst-grid.css \
+	catalyst-spaces.css
 
 .PHONY: build watch dist deploy clean install
 
