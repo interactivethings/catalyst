@@ -1,0 +1,14 @@
+{
+  "name": "catalyst",
+  "version": "1.0.0-beta",
+  "main": "catalyst.css",
+  "ignore": [
+    ".DS_Store",
+    ".git",
+    ".gitignore",
+    "package.json",
+    "Makefile",
+    "bin",
+    "test"
+  ]
+}

@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-PATH  := ./bin:node_modules/.bin:$(PATH)
+PATH  := node_modules/.bin:$(PATH)
 
 GENERATED_FILES = \
 	catalyst.css \
@@ -11,7 +11,7 @@ GENERATED_FILES = \
 
 all: build
 
-install: node_modules
+install: node_modules bower.json
 
 build: clean install $(GENERATED_FILES)
 
@@ -20,11 +20,11 @@ watch: install
 
 dist: build
 	@mkdir -p dist
-	@dist index.html $(GENERATED_FILES)
+	@bin/dist index.html $(GENERATED_FILES)
 	@git add .
-	@V=`version`; git commit -m "$(subst VERSION,$$V,DIST VERSION)"
+	@V=`bin/version`; git commit -m "$(subst VERSION,$$V,DIST VERSION)"
 	@git subtree push --prefix dist origin gh-pages
-	@V=`version`; git tag $$V
+	@V=`bin/version`; git tag $$V
 
 deploy: dist
 	@echo "TODO"
@@ -34,6 +34,11 @@ clean:
 
 node_modules: package.json
 	@npm install
+	@touch $@
+
+bower.json: package.json
+	@rm -f $@
+	@bin/bower > $@
 	@touch $@
 
 %.css: src/%.scss
