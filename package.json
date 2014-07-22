@@ -5,15 +5,9 @@
   "main": "catalyst.css",
   "dependencies": {},
   "devDependencies": {
-    "lodash": "",
-    "rsvp": "",
-    "glob": "",
-    "watch-glob": "",
-    "coffee-script": "",
-    "minimist": "",
-    "watchman": "",
-    "cli-color": "",
-    "clean-css": "",
+    "watchman": "0.1.8",
+    "cli-color": "0.3.2",
+    "clean-css": "2.2.8",
     "node-sass": "0.9.3"
   },
   "author": "Peter Gassner <peter@interactivethings.com>",
@@ -22,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/interactivethings/catalyst"
+    "url": "https://github.com/interactivethings/catalyst.git"
   },
   "license": "MIT"
 }
