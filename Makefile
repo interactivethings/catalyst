@@ -39,7 +39,7 @@ node_modules: package.json
 bower.json: package.json
 	@rm -f $@
 	@bin/bower > $@
-	@touch $@
+	@chmod a-w $@
 
 %.css: src/%.scss
 	@node-sass --output-style expanded $< $@
