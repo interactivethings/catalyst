@@ -2,3 +2,8 @@
 .sass-cache
 node_modules
 /*.css
+
+# Test Files
+test/failures
+test/results
+test/blueprints #temporarily
