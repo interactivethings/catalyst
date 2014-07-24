@@ -21,6 +21,10 @@ watch: install
 dist: build
 	@mkdir -p dist
 	@bin/dist index.html $(GENERATED_FILES)
+	@cp node_modules/catalog/dist/catalog.js dist/catalog.js
+	@rm -rf dist/docs
+	@cp -R docs/ dist/docs/
+	@sed -i '' 's/node_modules\/catalog\/dist\///g' dist/index.html
 	@git add .
 	@V=`bin/version`; git commit -m "$(subst VERSION,$$V,DIST VERSION)"
 	@git subtree push --prefix dist origin gh-pages
