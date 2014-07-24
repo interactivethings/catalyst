@@ -38,10 +38,10 @@ casper.then ->
   @echo "CURRENTLY TESTING: " + @getTitle()
   phantomcss.screenshot "body", "grid" # where (selector, filename)
 
-casper.then now_check_the_screenshots = ->
+casper.then ->
   phantomcss.compareAll()
 
-casper.then end_it = ->
+casper.then ->
   casper.test.done()
 
 casper.run ->
