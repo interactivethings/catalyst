@@ -13,7 +13,9 @@ phantomcss.init
   failedComparisonsRoot   : "./test/failures"     # Folder for test failures
 
   # Options
-  cleanupComparisonImages : true
+  addLabelToFailedImage   : false                 # Don't add label to generated failure image
+  cleanupComparisonImages : true                  # Cleanup results folder after test
+  mismatchTolerance       : 0.00                  # Mismatch tolerance defaults to 0.05%
 
   # Callbacks
   # onPass: passCallback = ->
@@ -23,9 +25,9 @@ phantomcss.init
 
   outputSettings:
     errorColor:
-      red: 255
-      green: 255
-      blue: 0
+      red: 137
+      green: 254
+      blue: 184
     errorType: "movement"
     transparency: 0.3
 

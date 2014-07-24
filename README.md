@@ -27,7 +27,7 @@ Running tests is as simple as:
 
 ```
 $ cd catalyst root directory
-$ casperjs test test/instructions/run.js.coffee
+$ casperjs test test/instructions/run.coffee
 ```
 
 ### Publishing new versions
