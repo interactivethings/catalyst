@@ -13,19 +13,13 @@ phantomcss.init
   failedComparisonsRoot   : "./test/failures"     # Folder for test failures
 
   # Options
-  cleanupComparisonImages : true # TODO FIX
-  mismatchTolerance       : 0.00
-  addLabelToFailedImage   : true
+  cleanupComparisonImages : true
 
   # Callbacks
-  onPass: passCallback = ->
-    console.log("\nAll files passed the test.")
-  onFail: failCallback = ->
-    console.log("\nOne or more files didn’t pass the test.")
-  onTimeout: timeoutCallback = ->
-    console.log("\nThat took a bit too long.")
-  onComplete: completeCallback = ->
-    console.log("You’re welcome.\n")
+  # onPass: passCallback = ->
+  # onFail: failCallback = ->
+  # onTimeout: timeoutCallback = ->
+  # onComplete: completeCallback = ->
 
   outputSettings:
     errorColor:
