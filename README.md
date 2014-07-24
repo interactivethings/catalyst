@@ -14,6 +14,22 @@ After that, just run `make` in the project root to install all dependencies and 
 
 During development, run `make watch` to automatically rebuild the project when you make changes to the source files.
 
+### Tests
+
+Catalyst has CSS Regression Testing system built in. Any changes made must be validated by running PhantomCSS tests. PhantomCSS requires PhantomJS and CasperJS hence following steps are needed for Test setup:
+
+```
+$ brew install phantomjs
+$ brew install casperjs --devel
+```
+
+Running tests is as simple as:
+
+```
+$ cd catalyst root directory
+$ casperjs test test/instructions/run.js.coffee
+```
+
 ### Publishing new versions
 
 We use semantic versioning (http://semver.org/) to create Catalyst packages. When you add new features or bugfixes, you should update the version information in `package.json` and create a new distribution:
