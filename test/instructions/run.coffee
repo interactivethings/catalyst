@@ -1,8 +1,9 @@
-# PhantomCSS requires PhantomJS and CasperJS, can use Brew to install both:
-# $ brew install phantomjs
-# $ brew install casperjs --devel
-
+# Require dependencies
+# --------------------
 phantomcss  = require("./../../node_modules/phantomcss/phantomcss.js")
+
+# Init PhantomCSS magic
+# --------------------
 phantomcss.init
 
   # Paths
@@ -31,18 +32,83 @@ phantomcss.init
     errorType: "movement"
     transparency: 0.3
 
-casper.start "test/grid.html"
-casper.viewport 1024, 768
+# Define Test scenarios
+# --------------------
 
+scenarios = [
+  ->
+    @echo "Grid"
+    @start "test/grid.html", ->
+      @echo "CURRENTLY TESTING: " + (@getTitle())
+    @viewport 1024, 768
+    @then ->
+      phantomcss.screenshot "body", "grid" # where (selector, filename)
+    @then ->
+      phantomcss.compareAll()
+
+  ->
+    @echo "Spaces"
+    @viewport 1024, 768
+    @start "test/spaces.html", ->
+      @echo "CURRENTLY TESTING: " + (@getTitle())
+    @then ->
+      phantomcss.screenshot "body", "spaces" # where (selector, filename)
+    @then ->
+      phantomcss.compareAll()
+
+  ->
+    @echo "Utilities"
+    @viewport 1024, 768
+    @start "test/utilities.html", ->
+      @echo "CURRENTLY TESTING: " + (@getTitle())
+    @then ->
+      phantomcss.screenshot "body", "utilities" # where (selector, filename)
+    @then ->
+      phantomcss.compareAll()
+
+  ->
+    @echo "Visibility"
+    @viewport 1024, 768
+    @start "test/visibility.html", ->
+      @echo "CURRENTLY TESTING: " + (@getTitle())
+    @then ->
+      phantomcss.screenshot "body", "visibility" # where (selector, filename)
+    @then ->
+      phantomcss.compareAll()
+
+]
+
+casper.start()
 casper.then ->
-  @echo "CURRENTLY TESTING: " + @getTitle()
-  phantomcss.screenshot "body", "grid" # where (selector, filename)
+  @echo "Starting"
 
-casper.then ->
-  phantomcss.compareAll()
+currentSuite = 0
+check = ->
+  if scenarios[currentSuite]
+    scenarios[currentSuite].call this
+    currentSuite++
+    casper.run check
+  else
+    @echo "All done."
+    @exit()
 
-casper.then ->
-  casper.test.done()
+casper.run check
 
-casper.run ->
-  phantom.exit phantomcss.getExitStatus()
+# # Define Test environment
+# casper.start "test/grid.html"
+# casper.viewport 1024, 768
+
+# # Start the Test
+# casper.then ->
+#   @echo "CURRENTLY TESTING: " + @getTitle()
+#   phantomcss.screenshot "body", "grid" # where (selector, filename)
+
+# # Compare Test Results
+# casper.then ->
+#   phantomcss.compareAll()
+
+# # End the Test
+# casper.then ->
+#   casper.test.done()
+# casper.run ->
+#   phantom.exit phantomcss.getExitStatus()
