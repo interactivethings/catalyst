@@ -1,6 +1,9 @@
 # Require dependencies
 # --------------------
+
 phantomcss  = require("./../../node_modules/phantomcss/phantomcss.js")
+testFiles   = ["grid","spaces","utilities", "visibility"]
+testEnvs    = ["640,1136","1024,768","1440,900"]
 
 # Init PhantomCSS magic
 # --------------------
@@ -26,57 +29,34 @@ phantomcss.init
 
   outputSettings:
     errorColor:
-      red: 137
-      green: 254
-      blue: 184
+      red: 228
+      green: 28
+      blue: 113
     errorType: "movement"
     transparency: 0.3
 
 # Define Test scenarios
 # --------------------
 
-scenarios = [
-  ->
-    @echo "Grid"
-    @start "test/grid.html", ->
-      @echo "CURRENTLY TESTING: " + (@getTitle())
-    @viewport 1024, 768
-    @then ->
-      phantomcss.screenshot "body", "grid" # where (selector, filename)
-    @then ->
-      phantomcss.compareAll()
-
-  ->
-    @echo "Spaces"
-    @viewport 1024, 768
-    @start "test/spaces.html", ->
-      @echo "CURRENTLY TESTING: " + (@getTitle())
-    @then ->
-      phantomcss.screenshot "body", "spaces" # where (selector, filename)
-    @then ->
-      phantomcss.compareAll()
-
-  ->
-    @echo "Utilities"
-    @viewport 1024, 768
-    @start "test/utilities.html", ->
-      @echo "CURRENTLY TESTING: " + (@getTitle())
-    @then ->
-      phantomcss.screenshot "body", "utilities" # where (selector, filename)
-    @then ->
-      phantomcss.compareAll()
-
-  ->
-    @echo "Visibility"
-    @viewport 1024, 768
-    @start "test/visibility.html", ->
-      @echo "CURRENTLY TESTING: " + (@getTitle())
-    @then ->
-      phantomcss.screenshot "body", "visibility" # where (selector, filename)
-    @then ->
-      phantomcss.compareAll()
-
+config = [
+  {name: "grid", path: "test/grid.html", viewports: [1440, 1024, 640]}
+  {name: "spaces", path: "test/spaces.html", viewports: [1440, 1024, 640]}
+  {name: "utilities", path: "test/utilities.html", viewports: [1440, 1024, 640]}
+  {name: "visibility", path: "test/visibility.html", viewports: [1440, 1024, 640]}
 ]
+
+scenarios = config.reduce(((acc, scenario) ->
+  acc.concat scenario.viewports.map (viewportWidth) ->
+    ->
+      @echo scenario.name
+      @start scenario.path, ->
+        @echo "CURRENTLY TESTING: " + (@getTitle())
+      @viewport viewportWidth, 600
+      @then ->
+        phantomcss.screenshot "body", "#{scenario.name}-#{viewportWidth}" # where (selector, filename)
+      @then ->
+        phantomcss.compareAll()
+  ), [])
 
 casper.start()
 casper.then ->
@@ -93,22 +73,3 @@ check = ->
     @exit()
 
 casper.run check
-
-# # Define Test environment
-# casper.start "test/grid.html"
-# casper.viewport 1024, 768
-
-# # Start the Test
-# casper.then ->
-#   @echo "CURRENTLY TESTING: " + @getTitle()
-#   phantomcss.screenshot "body", "grid" # where (selector, filename)
-
-# # Compare Test Results
-# casper.then ->
-#   phantomcss.compareAll()
-
-# # End the Test
-# casper.then ->
-#   casper.test.done()
-# casper.run ->
-#   phantom.exit phantomcss.getExitStatus()
