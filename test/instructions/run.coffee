@@ -2,8 +2,6 @@
 # --------------------
 
 phantomcss  = require("./../../node_modules/phantomcss/phantomcss.js")
-testFiles   = ["grid","spaces","utilities", "visibility"]
-testEnvs    = ["640,1136","1024,768","1440,900"]
 
 # Init PhantomCSS magic
 # --------------------
