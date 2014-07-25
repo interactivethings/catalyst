@@ -37,7 +37,7 @@ function versionExists(version) {
 
 function copyAndExpandFileSync(srcPath, destPath) {
   var src = fs.readFileSync(srcPath);
-  src = src.toString().replace(/%VERSION%/, VERSION);
+  src = src.toString().replace(/%VERSION%/g, VERSION);
   fs.writeFileSync(destPath, src);
 }
 

@@ -1,56 +1,71 @@
 # Catalyst
 
-## Introduction
+> Catalyst helps you create solid responsive CSS layouts. Each grid, space, visibility and utility class is responsive, allowing you to adjust your layouts to all devices, from smartphones to desktop computers. You can use the completely dependency free version of Catalyst or configure it to meet your project's needs.
 
-Catalyst is a CSS framework for building web-based application frontends. It has been built with the principle of mobile-first in mind. Each grid, space,visibility and utility class is responsive and, again, mobile first—allowing us to totally alter layout properties assigned to an element per each of the predefined breakpoints.
+Catalyst works best when you start with a mobile-first approach, creating a layout for small screens first. You'll be using Catalyst CSS classes with the `s-` prefix to do that. Build your layout up from there to work on tablet- (`m-`) and desktop-sized (`l-`) screens. If you need different breakpoints than `s`mall, `m`edium and `l`arge you're free to configure your own.
 
-Catalyst is a companion product to Catalog, our frontend style guide template.
-
-Cat•a•lyst—a substance that increases the rate of a chemical reaction without itself undergoing any permanent chemical change. Such is the premise of this CSS framework—help you grow your front-end organisms and ecosystems without need of much mutation. Catalyst is already super-flexi out of the probe. It’s good chemistry.
-
-### Mobile First
-
-Catalyst has been built with the principle of mobile-first in mind. Each <a href="grid-system.html">grid</a>, <a href="space-helpers.html">space</a>, <a href="visibility-helpers.html">visibility</a> and <a href="utility-helpers.html">utility</a> class is responsive and, again, mobile first—allowing you to totally alter layout properties assigned to an element per each of the predefined breakpoints.
-
-Assuming you’ll be first laying out things for mobile, you will be using Catalyst classes with <code>s-</code> prefix. Tablet and destkop alterations will require <code>m-</code> and <code>l-</code> prefixes respectively. Prefixes come in your favorite t-shirt sizes: <code>s-</code> stands for small, <code>m-</code> for medium and <code>l-</code> for large.
-
-### Desktop Friendly by Default
-
-If for some reason you’re building a UI that is not meant to be responsive, you’re sorted as well. There are two ways to proceed then: either you’ll use only <code>s-</code> prefixed classes or ditch breakpoint prefixes altogether.
-
-The advantage of the first approach is that, if at some point you decide to make your app responsive, you already have mobile layout set and you just need to add <code>m-</code> and <code>l-</code> variants if necessary. The other approach is more conservative and assumes you’ll be doing stuff for destktop forever. You don’t want that.
+If for some reason you’re building a UI that is not meant to be responsive, Catalyst has your back as well. There are two ways to proceed: either you’ll use only `s-` prefixed classes or you don't use any prefixes at all. The advantage of the first approach is that if, at some point, you decide to make your app responsive, you already have a mobile layout ready and can start adding layout adjustments. The second approach is more conservative and assumes that you’ll be doing stuff for desktop-sized devices forever. You don’t want that.
 
 ## Getting started
 
-The current version is %VERSION%
+Catalyst works best when you integrate it in your [Sass](http://sass-lang.com/) project. But if you want to get started quickly or for some reason can't work with Sass, just use one of these ready-to-use versions:
 
-Install with npm:
+* Current version (%VERSION%): [download](http://interactivethings.github.io/catalyst/%VERSION%/catalyst.css)
+* Without CSS Reset (provide your own!): [download](http://interactivethings.github.io/catalyst/%VERSION%/catalyst-no-reset.css)
+* Grid only: [download](http://interactivethings.github.io/catalyst/%VERSION%/catalyst-grid.css)
+* Spaces only: [download](http://interactivethings.github.io/catalyst/%VERSION%/catalyst-spaces.css)
 
-    npm install --save interactivethings/catalyst.git#%VERSION%
+### Install with npm
 
-Install with Bower:
+```code
+npm install --save interactivethings/catalyst.git#%VERSION%
+```
 
-    bower install --save https://github.com/interactivethings/catalyst.git#%VERSION%
+### Install with Bower
 
+```code
+bower install --save https://github.com/interactivethings/catalyst.git#%VERSION%
+```
+
+### Source code
+The source code is available on [Github](https://github.com/interactivethings/catalyst).
 
 ## Overview
 
-### Reset <span>_reset.scss</span>
+### Reset `_reset.scss`
 
-Catalyst comes with CSS reset based on <a href="http://meyerweb.com/eric/tools/css/reset/">Eric Meyer’s reset</a>. It is here to guarante cross-browser and cross-device clean slate for your UI by stripping all browsers’ default styles. This way you can be sure that each HTML tag will look exactly the same independently from the rendering engine you’re developing for.
+Catalyst comes with a CSS reset based on <a href="http://meyerweb.com/eric/tools/css/reset/">Eric Meyer’s reset</a>. It is here to guarante a cross-browser and cross-device clean slate for your UI by stripping all the browser’s default styles. This way you can be sure that each HTML tag will look exactly how you style it. This reset also sets `box-sizing: border-box` by default. If you can't work with that, bring your own reset.
 
-### Grid System <span>_grid-system.scss</span>
+### Grid `_grid.scss`
 
-Catalyst’s responsive grid system, with its core built on the principal of proportions rather than 12 or 16 modules, offers greater flexibility than any other framework. Being based on parts of a whole ranging from 2 to 6 modules it allows for creation of both: odd and even number of columns, and painless nesting.
+Catalyst’s responsive grid system is built around proportions rather than a fixed amount of columns. This offers much greater flexibility than other frameworks. Being based on parts of a whole ranging from 1 to 6 modules it allows for creation of both: odd and even number of columns, and painless nesting. If you need different proportions, you can configure them easily.
 
-### Space Helpers <span>_space-helpers.scss</span>
+Catalyst's grid columns have neither paddings nor margins. In situations where you need a gutter between columns, a guttered grid is available.
 
-As Catalyst’s grid system comes with no unnecessay default paddings or margins, should you find yourself in need of applying some extra spacing around *any* element, space helpers will become your best friends. Padding and margin CSS classes defined with a set of handy SASS variables will help to keep your UI’s white space harmonious, and your stylesheets clean. And yes, space helpers are responsive too.
+[&rarr; Grid documentation](#/grid)
 
-### Visibility Helpers <span>_visibility-helpers.scss</span>
+### Spaces `_spaces.scss`
 
-Should you wish to show or hide a bit of content for a particular device or screen orientation, Catalyst makes it easy to achieve this with Visibility Helper classes. Hiding a block, a div or even a single character on mobile and showing it on larger display (or the other way around) will be as simple as giving that element a class.
+Instead of having fixed margins and paddings in the grid layout, Catalyst provides spacing classes. These allow you to space components right in your layout. Using spaces will help to keep your UI’s white space harmonious, and your stylesheets clean. And most importantly your components flexible because they don't (and shouldn't) have to define outer margins to put space between themselves and others. Of course spaces are responsive too.
 
-### Utility Helpers <span>_utility-helpers.scss</span>
+[&rarr; Spaces documentation](#/spaces)
 
-Utility helpers are text alignment and box model (clearfix, float) classes that, by principal, can be applied to any tag. Should you wish to float that button right only on large displays, or justify text of that paragraph only on tables—that’s your toolbox.
+### Visibility `_visibility.scss`
+
+To hide a piece of content for a particular device size or screen orientation, Catalyst provides visibility classes. Hiding a block, a `div` or even a single character depending on screen size lets you provide an optimized experience.
+
+[&rarr; Visibility documentation](#/visibility)
+
+### Utilities `_utilities.scss`
+
+Utilities are text alignment and box model classes that can be applied to any element. Should you wish to float that button right on small displays only or have that paragraph's text justified on large screens; that's in your toolbox.
+
+[&rarr; Utilities documentation](#/utilities)
+
+## Configuration
+
+For the time being you just have to look through the Sass source code to see how to configure Catalyst. We plan to guide you through this in the future.
+
+## More tools
+
+Catalyst is a companion product to <a href="http://interactivethings.github.io/catalog/">Catalog</a>. Catalog helps you create beautiful living style guides of your HTML/CSS/JS components quickly and easily.
