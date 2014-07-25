@@ -1,6 +1,6 @@
 {
   "name": "catalyst",
-  "version": "1.0.0-alpha2",
+  "version": "1.0.0-beta",
   "main": "catalyst.css",
   "ignore": [
     ".DS_Store",
