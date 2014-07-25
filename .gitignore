@@ -6,4 +6,3 @@ node_modules
 # Test Files
 /test/failures
 /test/results
-/test/blueprints
