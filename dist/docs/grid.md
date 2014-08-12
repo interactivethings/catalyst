@@ -1,54 +1,19 @@
-<style type="text/css">
-/* Box sizing */
-.group, [class*="gutter-"], [class*="span-"] { box-sizing: border-box; }
-.bg {
-  background: #d7e7ee;
-  min-height: 60px;
-  width: 100%;
-}
-.group {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAJElEQVQImT2JsQ0AMAyDyP+/2ieQIWqZEJDEx6gA0JZr9/mmLgUWKQ+z/AZWAAAAAElFTkSuQmCC");
-  color: #333;
-  font-family: helvetica;
-  font-size: 11px;
-  line-height: 1.4;
-}
-[class*="gutter-"] + [class*="gutter-"],
-.group + .group {
-  margin-top: 1px;
-}
-[class*="span-"] {
-  background: #eee;
-  min-height: 60px;
-}
-[class*="span-"]:hover:before {
-  background: #333;
-  color: #ccc;
-  content: attr(class);
-  position: absolute;
-}
-[class*="span-"]:nth-child(2n-1) {
-  background: #ddd;
-}
-</style>
-
-
 # Grid
 
 > Catalyst’s responsive grid system is built around proportions rather than a fixed amount of columns. This offers much greater flexibility than other frameworks. Being based on parts of a whole ranging from 1 to 6 modules it allows for creation of both: odd and even number of columns, and painless nesting. If you need different proportions, you can configure them easily.
 
 Grid units span across parts of a `.group`. Think of the group as the width of your page, `.span-1of2` will create a column that fills half of the group. Easy. The syntax of a grid unit class stays always the same: `([viewport variable]-) + span- + [part]of[whole]`. The following are only a few class variations:
 
-* `span-1of1` — unit that spans accross the whole parent container
-* `span-1of2` — unit that spans accross the 1/2 of parent container
-* `span-1of3` — unit that spans accross the 1/3 of parent container
-* `span-1of4` — unit that spans accross the 1/4 of parent container
-* `span-1of5` — unit that spans accross the 1/5 of parent container
-* `span-1of6` — unit that spans accross the 1/6 of parent container
-* `s-span-1of2` — unit that spans across half of the parent container on small and bigger devices
-* `m-span-1of3` — unit that spans across 1/3 of the parent container on medium and bigger devices
-* `s-span-1of1 l-span-3of4` — unit that spans across the entire parent container on small and medium devices and across 3/4 on large devices
-* `m-s-span-1of1 m-span-3of5 l-span-4of6` — unit that spans accross the entire parent on small, 3/5 on medium and 4/6 on large devices
+* `span-1of1` – unit that spans accross the whole parent container
+* `span-1of2` – unit that spans accross the 1/2 of parent container
+* `span-1of3` – unit that spans accross the 1/3 of parent container
+* `span-1of4` – unit that spans accross the 1/4 of parent container
+* `span-1of5` – unit that spans accross the 1/5 of parent container
+* `span-1of6` – unit that spans accross the 1/6 of parent container
+* `s-span-1of2` – unit that spans across half of the parent container on small and bigger devices
+* `m-span-1of3` – unit that spans across 1/3 of the parent container on medium and bigger devices
+* `s-span-1of1 l-span-3of4` – unit that spans across the entire parent container on small and medium devices and across 3/4 on large devices
+* `m-s-span-1of1 m-span-3of5 l-span-4of6` – unit that spans accross the entire parent on small, 3/5 on medium and 4/6 on large devices
 
 
 ## Basics
@@ -163,7 +128,7 @@ Offset modifiers allow to shift position of `span` units within one `group` to t
 
 ## Alignment
 
-Centering and flow modifiers allow to set left-, right- and center-alignment property to a `span` unit within a group. It might come in handy—among many other cases—when, for example, you’d need a centered column that is not 100% wide. Alignment modifier classes work within breakpoints, therefore accept `s-`, `-m` and `l-` prefixes. All possible alignment modifiers:
+Centering and flow modifiers allow to set left-, right- and center-alignment property to a `span` unit within a group. It might come in handy – among many other cases – when, for example, you’d need a centered column that is not 100% wide. Alignment modifier classes work within breakpoints, therefore accept `s-`, `-m` and `l-` prefixes. All possible alignment modifiers:
 
 * `center`
 * `s-center`
@@ -200,7 +165,7 @@ Centering and flow modifiers allow to set left-, right- and center-alignment pro
 ```
 
 
-## Push &amp; pull
+## Push + pull
 
 Push and pull modifiers can be used to visually invert position of `span` containers within a `group` while maintaining their position in the markup. Push and pull modifier classes work within breakpoints, therefore accept `s-`, `m-` and `l-` prefixes.
 
