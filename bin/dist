@@ -9,23 +9,29 @@ var ROOT    = path.join(__dirname, '..');
 var VERSION = require("../package.json").version;
 var FILES   = process.argv.slice(2);
 
-if (versionExists(VERSION)) {
-  console.log(clc.red.bold("Error: a distribution for version " + VERSION + " already exists"));
-  process.exit(1);
+var newRelease = !versionExists(VERSION);
+
+if (newRelease) {
+  fs.mkdir(rpath('dist', VERSION));
+} else {
+  console.log(clc.yellow.bold("Warning: a distribution for version " + VERSION + " already exists.\nWill update nightly build without touching " + VERSION));
 }
 
-fs.mkdir(rpath('dist', VERSION));
 
 FILES.forEach(function(filepath) {
   copyAndExpandFileSync(rpath(filepath), rpath('dist', filepath));
 
-  if (filepath.match(/.css/)) {
+  if (newRelease && filepath.match(/.css/)) {
     var css = fs.readFileSync(rpath(filepath));
     fs.writeFileSync(rpath('dist', VERSION, filepath), minifyCSS(css));
   }
 });
 
-console.log(clc.green("Created Catalyst version " + VERSION));
+if (newRelease) {
+  console.log(clc.green("Created Catalyst version " + VERSION));
+} else {
+  console.log(clc.green("Updated nightly build"));
+}
 
 
 /* Utils

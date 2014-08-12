@@ -18,20 +18,21 @@ build: clean install $(GENERATED_FILES)
 watch: install
 	@watchman src "make --always-make build"
 
-dist: build
+build-dist: build
 	@mkdir -p dist
-	@bin/dist index.html $(GENERATED_FILES)
-	@cp node_modules/catalog/dist/catalog.js dist/catalog.js
 	@rm -rf dist/docs
-	@cp -R docs/ dist/docs/
+	@mkdir -p dist/docs
+	@bin/dist index.html $(GENERATED_FILES) $(wildcard docs/*)
+	@cp node_modules/catalog/dist/catalog.js dist/catalog.js
 	@sed -i '' 's/node_modules\/catalog\/dist\///g' dist/index.html
+
+dist: build-dist
 	@git add .
 	@V=`bin/version`; git commit -m "$(subst VERSION,$$V,DIST VERSION)"
-	@git subtree push --prefix dist origin gh-pages
 	@V=`bin/version`; git tag $$V
 
 deploy: dist
-	@echo "TODO"
+	@git subtree push --prefix dist origin gh-pages
 
 clean:
 	@rm -rf -- $(GENERATED_FILES)
