@@ -1,0 +1,31 @@
+/* Box sizing */
+.group, [class*="gutter-"], [class*="span-"] { box-sizing: border-box; }
+.bg {
+  background: #d7e7ee;
+  min-height: 60px;
+  width: 100%;
+}
+.group {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAJElEQVQImT2JsQ0AMAyDyP+/2ieQIWqZEJDEx6gA0JZr9/mmLgUWKQ+z/AZWAAAAAElFTkSuQmCC");
+  color: #333;
+  font-family: helvetica;
+  font-size: 11px;
+  line-height: 1.4;
+}
+[class*="gutter-"] + [class*="gutter-"],
+.group + .group {
+  margin-top: 1px;
+}
+[class*="span-"] {
+  background: #eee;
+  min-height: 60px;
+}
+[class*="span-"]:hover:before {
+  background: #333;
+  color: #ccc;
+  content: attr(class);
+  position: absolute;
+}
+[class*="span-"]:nth-child(2n-1) {
+  background: #ddd;
+}

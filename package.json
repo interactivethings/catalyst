@@ -5,7 +5,7 @@
   "main": "catalyst.css",
   "dependencies": {},
   "devDependencies": {
-    "catalog": "interactivethings/catalog.git#1.0.0-alpha",
+    "catalog": "interactivethings/catalog.git#1.0.0-alpha-4",
     "watchman": "0.1.8",
     "cli-color": "0.3.2",
     "clean-css": "2.2.8",
