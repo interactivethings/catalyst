@@ -2,7 +2,7 @@
   "name": "catalyst",
   "version": "1.0.0-beta",
   "description": "Catalyst is the CSS foundation for web projects created at Interactive Things.",
-  "main": "catalyst.css",
+  "main": "dist/catalyst.css",
   "dependencies": {},
   "devDependencies": {
     "catalog": "interactivethings/catalog.git#1.0.0-alpha-4",
