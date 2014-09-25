@@ -10,21 +10,21 @@ If for some reason you’re building a UI that is not meant to be responsive, Ca
 
 Catalyst works best when you integrate it in your [Sass](http://sass-lang.com/) project. But if you want to get started quickly or for some reason can't work with Sass, just use one of these ready-to-use versions:
 
-* Current version (1.0.0-beta): [download](http://interactivethings.github.io/catalyst/1.0.0-beta/catalyst.css)
-* Without CSS Reset (provide your own!): [download](http://interactivethings.github.io/catalyst/1.0.0-beta/catalyst-no-reset.css)
-* Grid only: [download](http://interactivethings.github.io/catalyst/1.0.0-beta/catalyst-grid.css)
-* Spaces only: [download](http://interactivethings.github.io/catalyst/1.0.0-beta/catalyst-spaces.css)
+* Current version (1.0.0-beta2): [download](http://interactivethings.github.io/catalyst/1.0.0-beta2/catalyst.css)
+* Without CSS Reset (provide your own!): [download](http://interactivethings.github.io/catalyst/1.0.0-beta2/catalyst-no-reset.css)
+* Grid only: [download](http://interactivethings.github.io/catalyst/1.0.0-beta2/catalyst-grid.css)
+* Spaces only: [download](http://interactivethings.github.io/catalyst/1.0.0-beta2/catalyst-spaces.css)
 
 ### Install with npm
 
 ```code
-npm install --save interactivethings/catalyst.git#1.0.0-beta
+npm install --save interactivethings/catalyst.git#1.0.0-beta2
 ```
 
 ### Install with Bower
 
 ```code
-bower install --save https://github.com/interactivethings/catalyst.git#1.0.0-beta
+bower install --save https://github.com/interactivethings/catalyst.git#1.0.0-beta2
 ```
 
 ### Source code
