@@ -32,7 +32,9 @@ dist: build-dist
 	@V=`bin/version`; git tag $$V
 
 deploy: dist
-	@git subtree push --prefix dist origin gh-pages
+	@git subtree split --prefix dist --branch gh-pages && \
+	git push --force origin gh-pages:gh-pages && \
+	git branch -D gh-pages
 
 clean:
 	@rm -rf -- $(GENERATED_FILES)
