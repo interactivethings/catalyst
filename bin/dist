@@ -21,7 +21,7 @@ if (newRelease) {
 FILES.forEach(function(filepath) {
   copyAndExpandFileSync(rpath(filepath), rpath('dist', filepath));
 
-  if (newRelease && filepath.match(/.css/)) {
+  if (newRelease && !filepath.match(/docs\//) && filepath.match(/.css/)) {
     var css = fs.readFileSync(rpath(filepath));
     fs.writeFileSync(rpath('dist', VERSION, filepath), minifyCSS(css));
   }
