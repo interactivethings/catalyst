@@ -11,6 +11,7 @@
   @if $key == '' {
     @content;
   } @else {
+    $query: '';
     @if $restriction == 'only' {
       $query: 'only screen and (min-width:#{breakpoint-start($key)}) and (max-width:#{breakpoint-end($key)})';
     } @else if $restriction == 'down' {
