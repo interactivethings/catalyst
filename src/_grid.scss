@@ -185,9 +185,10 @@
 @mixin __grid_gutter($space) {
   $gutter: space($space);
   & > .group {
+    $double-gutter: 2 * $gutter;
     margin-left: -$gutter;
     width: 100%; // Fallback
-    width: calc(100% + #{2 * $gutter});
+    width: calc(100% + #{$double-gutter});
     & > [class*="span-"] {
       padding-left: $gutter;
       padding-right: $gutter;
